@@ -16,7 +16,6 @@ import androidx.navigation.ui.setupWithNavController
 import application.android.refresh.R
 import application.android.refresh.data.db.entity.Layout
 import kotlinx.android.synthetic.main.fragment_layouts_info.*
-import kotlinx.android.synthetic.main.fragment_routines_info.*
 import org.kodein.di.KodeinAware
 import org.kodein.di.android.x.closestKodein
 import org.kodein.di.generic.instance
@@ -47,7 +46,6 @@ class LayoutsInfoFragment : Fragment(), KodeinAware {
 
     private fun setupUI() {
         setupToolbar()
-
         val layoutId = args.layoutId
 
         // Check for default arg value
@@ -55,9 +53,9 @@ class LayoutsInfoFragment : Fragment(), KodeinAware {
             findNavController().navigateUp()
             Toast.makeText(context, "Choose a layout to view", Toast.LENGTH_SHORT).show()
         }
-
         viewModel.layoutDetails(layoutId).observe(viewLifecycleOwner, Observer { layout ->
             setFields(layout)
+            setToolbarMenu(layout)
         })
     }
 
@@ -73,6 +71,22 @@ class LayoutsInfoFragment : Fragment(), KodeinAware {
         layoutsInfoToolbar.setupWithNavController(navController, appBarConfiguration)
     }
 
+    private fun setToolbarMenu(layout: Layout) {
+        layoutsInfoToolbar.inflateMenu(R.menu.info_menu)
+        val menu = layoutsInfoToolbar.menu
+        menu.findItem(R.id.action_edit).setOnMenuItemClickListener {
+            val layoutsUpdateAction =
+                LayoutsInfoFragmentDirections.layoutsUpdateAction(layout.id)
+            findNavController().navigate(layoutsUpdateAction)
+            return@setOnMenuItemClickListener true
+        }
+
+        menu.findItem(R.id.action_delete).setOnMenuItemClickListener {
+            confirmDeleteDialog(layout)
+            return@setOnMenuItemClickListener true
+        }
+    }
+
     private fun setFields(layout: Layout) {
         layoutsInfoFront.text = layout.front
         layoutsInfoBack.text = layout.back
@@ -84,15 +98,6 @@ class LayoutsInfoFragment : Fragment(), KodeinAware {
         } else {
             layoutsInfoBackExtraTitle.visibility = View.GONE
             layoutsInfoBackExtra.visibility = View.GONE
-        }
-
-        layoutsInfoEdit.setOnClickListener {
-            val layoutsUpdateAction = LayoutsInfoFragmentDirections.layoutsUpdateAction(layout.id)
-            findNavController().navigate(layoutsUpdateAction)
-        }
-
-        layoutsInfoDelete.setOnClickListener {
-            confirmDeleteDialog(layout)
         }
     }
 

@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
@@ -55,9 +56,13 @@ class CardsInfoFragment : Fragment(), KodeinAware {
         }
 
         viewModel.cardDetails(cardId).observe(viewLifecycleOwner, Observer { card ->
-            viewModel.layoutDetails(card.layoutId).observe(viewLifecycleOwner, Observer { layout ->
-               setFields(card, layout)
-            })
+            card?.let {
+                viewModel.layoutDetails(card.layoutId)
+                    .observe(viewLifecycleOwner, Observer { layout ->
+                        setFields(card, layout)
+                        setToolbarMenu(card)
+                    })
+            }
         })
     }
 
@@ -71,6 +76,21 @@ class CardsInfoFragment : Fragment(), KodeinAware {
             )
         )
         cardsInfoToolbar.setupWithNavController(navController, appBarConfiguration)
+    }
+
+    private fun setToolbarMenu(card: Card) {
+        cardsInfoToolbar.inflateMenu(R.menu.info_menu)
+        val menu = cardsInfoToolbar.menu
+        menu.findItem(R.id.action_edit).setOnMenuItemClickListener {
+            val cardsInfoAction = CardsInfoFragmentDirections.cardsUpdateAction(card.id)
+            findNavController().navigate(cardsInfoAction)
+            return@setOnMenuItemClickListener true
+        }
+
+        menu.findItem(R.id.action_delete).setOnMenuItemClickListener {
+            confirmDeleteDialog(card)
+            return@setOnMenuItemClickListener true
+        }
     }
 
     private fun setFields(card: Card, layout: Layout) {
@@ -88,19 +108,27 @@ class CardsInfoFragment : Fragment(), KodeinAware {
             cardsInfoBackExtraTitle.visibility = View.GONE
             cardsInfoBackExtra.visibility = View.GONE
         }
+    }
 
-        cardsInfoEdit.setOnClickListener {
-            val cardsInfoAction = CardsInfoFragmentDirections.cardsUpdateAction(card.id)
-            findNavController().navigate(cardsInfoAction)
-        }
-
-        cardsInfoDelete.setOnClickListener {
-            viewModel.deleteCard(card)
-            viewModel.isOkayToExit.observe(viewLifecycleOwner, Observer {
-                if (it) {
-                    findNavController().navigateUp()
-                }
-            })
-        }
+    private fun confirmDeleteDialog(card: Card) {
+        val builder = AlertDialog.Builder(requireContext())
+        builder.setTitle("Delete Card")
+        builder.setMessage("This will also affect existing routines")
+            .setPositiveButton(
+                "Delete"
+            ) { _, _ ->
+                viewModel.deleteCard(card)
+                viewModel.isOkayToExit.observe(viewLifecycleOwner, Observer {
+                    if (it) {
+                        findNavController().navigateUp()
+                    }
+                })
+            }
+            .setNegativeButton(
+                "Cancel"
+            ) { _, _ ->
+            }
+        builder.create()
+        builder.show()
     }
 }

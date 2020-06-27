@@ -49,15 +49,15 @@
             android:autoSizeTextType="uniform"
             android:textAlignment="center"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintDimensionRatio="h,2:1"
+            app:layout_constraintDimensionRatio="h,3:1"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="1.0"
+            app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/cardsInfoFrontTitle"
             app:layout_constraintVertical_bias="0.0"
             app:layout_constraintWidth_default="percent"
             app:layout_constraintWidth_percent="1"
-            tools:text="漢字" />
+            tools:text="o" />
 
         <TextView
             android:id="@+id/cardsInfoBackTitle"
@@ -121,32 +121,6 @@
             app:layout_constraintTop_toBottomOf="@+id/cardsInfoBackExtraTitle"
             app:layout_constraintVertical_bias="0.0"
             tools:text="こんにちは" />
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/cardsInfoBackExtra"
-            app:layout_constraintVertical_bias="0.064">
-
-            <com.google.android.material.button.MaterialButton
-                android:id="@+id/cardsInfoEdit"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_margin="16dp"
-                android:text="@string/edit" />
-
-            <com.google.android.material.button.MaterialButton
-                android:id="@+id/cardsInfoDelete"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_margin="16dp"
-                android:text="@string/remove" />
-        </LinearLayout>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </ScrollView>

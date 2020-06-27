@@ -29,6 +29,7 @@
     <string name="reset">Reset</string>
     <string name="edit">Edit</string>
     <string name="remove">Remove</string>
+    <string name="delete">Delete</string>
     <plurals name="layoutsSelected">
         <item quantity="one">%d layout selected</item>
         <item quantity="other">%d layouts selected</item>
