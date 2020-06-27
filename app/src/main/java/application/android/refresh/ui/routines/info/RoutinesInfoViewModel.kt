@@ -3,8 +3,8 @@ package application.android.refresh.ui.routines.info
 import androidx.lifecycle.*
 import application.android.refresh.data.db.entity.Card
 import application.android.refresh.data.db.entity.Layout
-import application.android.refresh.data.db.entity.RoutineCard
 import application.android.refresh.data.db.entity.Routine
+import application.android.refresh.data.db.entity.RoutineCard
 import application.android.refresh.data.repository.RefreshRepository
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -127,7 +127,10 @@ class RoutinesInfoViewModel(private val refreshRepository: RefreshRepository) : 
                 updatedFinishedCards.map { routineCard ->
                     routineCard.completed = false
                     if (validateWithRoutineCard(routineCard)) {
-                        newCardList.add(refreshRepository.getCardAtOnce(routineCard.id))
+                        val card: Card? = refreshRepository.getCardAtOnce(routineCard.id)
+                        if (card != null) {
+                            newCardList.add(card)
+                        }
                     }
                 }
                 val updatedRoutine = Routine(it.id, it.name, it.layoutIds, updatedFinishedCards)
@@ -146,7 +149,10 @@ class RoutinesInfoViewModel(private val refreshRepository: RefreshRepository) : 
                 updatedFinishedCards.map { routineCard ->
                     routineCard.sessionDelay = 0L
                     if (validateWithRoutineCard(routineCard)) {
-                        newCardList.add(refreshRepository.getCardAtOnce(routineCard.id))
+                        val card: Card? = refreshRepository.getCardAtOnce(routineCard.id)
+                        if (card != null) {
+                            newCardList.add(card)
+                        }
                     }
                 }
                 val updatedRoutine = Routine(it.id, it.name, it.layoutIds, updatedFinishedCards)
