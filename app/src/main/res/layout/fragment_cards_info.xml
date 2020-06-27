@@ -57,7 +57,7 @@
             app:layout_constraintVertical_bias="0.0"
             app:layout_constraintWidth_default="percent"
             app:layout_constraintWidth_percent="1"
-            tools:text="o" />
+            tools:text="漢字" />
 
         <TextView
             android:id="@+id/cardsInfoBackTitle"
