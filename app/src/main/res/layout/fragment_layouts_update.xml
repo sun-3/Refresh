@@ -7,6 +7,11 @@
     android:orientation="vertical"
     tools:context=".ui.layouts.update.LayoutsUpdateFragment">
 
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/layoutsUpdateToolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize" />
+
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

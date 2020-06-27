@@ -11,9 +11,12 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
+import androidx.navigation.ui.AppBarConfiguration
+import androidx.navigation.ui.setupWithNavController
 import application.android.refresh.R
 import application.android.refresh.data.db.entity.Layout
 import kotlinx.android.synthetic.main.fragment_layouts_info.*
+import kotlinx.android.synthetic.main.fragment_routines_info.*
 import org.kodein.di.KodeinAware
 import org.kodein.di.android.x.closestKodein
 import org.kodein.di.generic.instance
@@ -43,6 +46,8 @@ class LayoutsInfoFragment : Fragment(), KodeinAware {
     }
 
     private fun setupUI() {
+        setupToolbar()
+
         val layoutId = args.layoutId
 
         // Check for default arg value
@@ -54,6 +59,18 @@ class LayoutsInfoFragment : Fragment(), KodeinAware {
         viewModel.layoutDetails(layoutId).observe(viewLifecycleOwner, Observer { layout ->
             setFields(layout)
         })
+    }
+
+    private fun setupToolbar() {
+        val navController = findNavController()
+        val appBarConfiguration = AppBarConfiguration(
+            setOf(
+                R.id.navigation_layouts,
+                R.id.navigation_cards,
+                R.id.navigation_routines
+            )
+        )
+        layoutsInfoToolbar.setupWithNavController(navController, appBarConfiguration)
     }
 
     private fun setFields(layout: Layout) {
@@ -83,7 +100,8 @@ class LayoutsInfoFragment : Fragment(), KodeinAware {
         val builder = AlertDialog.Builder(requireContext())
         builder.setTitle("Delete Layout")
         builder.setMessage("This will also delete all the associated cards")
-            .setPositiveButton("Delete"
+            .setPositiveButton(
+                "Delete"
             ) { dialog, _ ->
                 viewModel.deleteLayout(layout)
                 viewModel.isOkayToExit.observe(viewLifecycleOwner, Observer {
@@ -93,7 +111,8 @@ class LayoutsInfoFragment : Fragment(), KodeinAware {
                 })
                 dialog.dismiss()
             }
-            .setNegativeButton("Cancel"
+            .setNegativeButton(
+                "Cancel"
             ) { dialog, _ ->
                 dialog.dismiss()
             }

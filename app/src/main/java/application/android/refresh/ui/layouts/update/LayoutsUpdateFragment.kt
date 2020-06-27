@@ -10,8 +10,11 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
+import androidx.navigation.ui.AppBarConfiguration
+import androidx.navigation.ui.setupWithNavController
 import application.android.refresh.R
 import application.android.refresh.data.db.entity.Layout
+import kotlinx.android.synthetic.main.fragment_layouts_info.*
 import kotlinx.android.synthetic.main.fragment_layouts_update.*
 import org.kodein.di.KodeinAware
 import org.kodein.di.android.x.closestKodein
@@ -43,6 +46,8 @@ class LayoutsUpdateFragment : Fragment(), KodeinAware {
     }
 
     private fun setupUI() {
+        setupToolbar()
+
         val layoutId = args.layoutId
 
         // Check for default arg value
@@ -54,6 +59,18 @@ class LayoutsUpdateFragment : Fragment(), KodeinAware {
         viewModel.layoutDetails(layoutId).observe(viewLifecycleOwner, Observer { layout ->
             setFields(layout)
         })
+    }
+
+    private fun setupToolbar() {
+        val navController = findNavController()
+        val appBarConfiguration = AppBarConfiguration(
+            setOf(
+                R.id.navigation_layouts,
+                R.id.navigation_cards,
+                R.id.navigation_routines
+            )
+        )
+        layoutsUpdateToolbar.setupWithNavController(navController, appBarConfiguration)
     }
 
     private fun setFields(layout: Layout) {
