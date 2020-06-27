@@ -1,0 +1,86 @@
+apply plugin: 'com.android.application'
+apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-kapt'
+apply plugin: 'kotlin-android-extensions'
+apply plugin: 'androidx.navigation.safeargs.kotlin'
+
+android {
+    compileSdkVersion 29
+    buildToolsVersion "29.0.3"
+
+    defaultConfig {
+        applicationId "application.android.refresh"
+        minSdkVersion 26
+        targetSdkVersion 29
+        versionCode 1
+        versionName "1.0"
+
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+
+// To inline the bytecode built with JVM target 1.8 into
+// bytecode that is being built with JVM target 1.6. (e.g. navArgs)
+
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+    kotlinOptions {
+        jvmTarget = "1.8"
+    }
+
+}
+
+dependencies {
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    // Standard Library and Kotlin
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:1.3.72"
+    implementation 'androidx.appcompat:appcompat:1.1.0'
+    implementation 'androidx.core:core-ktx:1.3.0'
+    implementation 'androidx.legacy:legacy-support-v4:1.0.0'
+
+    // Material Library
+    implementation 'com.google.android.material:material:1.1.0'
+    implementation 'androidx.constraintlayout:constraintlayout:1.1.3'
+
+    // Lifecycle
+    implementation 'androidx.lifecycle:lifecycle-extensions:2.2.0'
+    implementation 'androidx.lifecycle:lifecycle-livedata-ktx:2.2.0'
+    implementation 'androidx.lifecycle:lifecycle-viewmodel-ktx:2.2.0'
+
+    // Navigation
+    implementation 'androidx.navigation:navigation-fragment-ktx:2.2.2'
+    implementation 'androidx.navigation:navigation-ui-ktx:2.2.2'
+
+    // Room
+    implementation "androidx.room:room-runtime:2.2.5"
+    implementation "androidx.room:room-ktx:2.2.5"
+    kapt "androidx.room:room-compiler:2.2.5"
+
+    // Kotlin Coroutines
+    implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-core:1.3.7'
+    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:1.3.7"
+
+    // Kodein
+    implementation "org.kodein.di:kodein-di-generic-jvm:6.5.5"
+    implementation 'org.kodein.di:kodein-di-framework-android-x:6.5.5'
+
+    // Groupie
+    implementation 'com.xwray:groupie:2.8.0'
+    implementation 'com.xwray:groupie-kotlin-android-extensions:2.8.0'
+
+    // Gson
+    implementation 'com.google.code.gson:gson:2.8.6'
+
+    testImplementation 'junit:junit:4.12'
+    androidTestImplementation 'androidx.test.ext:junit:1.1.1'
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
+}

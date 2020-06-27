@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_centerInParent="false"
+    android:layout_centerHorizontal="false"
+    android:layout_centerVertical="false"
+    tools:context=".ui.cards.create.CardsCreateFragment">
+
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/cardsCreateToolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0" />
+
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/cardsCreateText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="8dp"
+        android:textColor="@color/colorAccent"
+        android:textSize="24sp"
+        app:layout_constraintBottom_toTopOf="@+id/cardsCreateAnswer"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/cardsCreateToolbar"
+        app:layout_constraintVertical_bias="1.0"
+        tools:text="Kanji" />
+
+    <com.google.android.material.textfield.TextInputEditText
+        android:id="@+id/cardsCreateAnswer"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:fadingEdge="horizontal|vertical"
+        android:fadingEdgeLength="10dp"
+        android:inputType="textPersonName"
+        android:textAlignment="center"
+        android:textSize="24sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.496"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/guideline"
+        app:layout_constraintVertical_bias="0.0"
+        tools:text="漢字" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.45" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.5" />
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:orientation="horizontal"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/cardsCreateAnswer"
+        app:layout_constraintVertical_bias="0.0">
+
+        <ImageButton
+            android:id="@+id/cardsCreateBack"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="24dp"
+            android:layout_marginStart="48dp"
+            android:layout_marginEnd="48dp"
+            android:backgroundTint="#00FFFFFF"
+            android:scaleX="1.5"
+            android:scaleY="1.5"
+            android:src="@drawable/ic_arrow_back"
+            android:tint="@color/colorAccent"
+            tools:visibility="visible" />
+
+        <ImageButton
+            android:id="@+id/cardsCreateNext"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="24dp"
+            android:layout_marginStart="48dp"
+            android:layout_marginEnd="48dp"
+            android:backgroundTint="#00FFFFFF"
+            android:scaleX="1.5"
+            android:scaleY="1.5"
+            android:src="@drawable/ic_arrow_next"
+            android:tint="@color/colorAccent"
+            tools:visibility="visible" />
+    </LinearLayout>
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

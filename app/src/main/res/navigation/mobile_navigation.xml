@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    app:startDestination="@+id/navigation_cards">
+
+    <fragment
+        android:id="@+id/navigation_layouts"
+        android:name="application.android.refresh.ui.layouts.LayoutsFragment"
+        android:label="@string/title_layouts"
+        tools:layout="@layout/fragment_layouts">
+        <action
+            android:id="@+id/layoutsCreateAction"
+            app:destination="@id/navigation_layouts_create" />
+        <action
+            android:id="@+id/layoutsInfoAction"
+            app:destination="@id/navigation_layouts_info" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/navigation_layouts_info"
+        android:name="application.android.refresh.ui.layouts.info.LayoutsInfoFragment"
+        android:label="@string/title_layouts_info"
+        tools:layout="@layout/fragment_layouts_info">
+        <argument
+            android:name="layoutId"
+            android:defaultValue="0L"
+            app:argType="long" />
+        <action
+            android:id="@+id/layoutsUpdateAction"
+            app:destination="@id/navigation_layouts_update" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/navigation_layouts_create"
+        android:name="application.android.refresh.ui.layouts.create.LayoutsCreateFragment"
+        android:label="@string/title_layouts_create"
+        tools:layout="@layout/fragment_layouts_create" />
+
+    <fragment
+        android:id="@+id/navigation_layouts_update"
+        android:name="application.android.refresh.ui.layouts.update.LayoutsUpdateFragment"
+        android:label="@string/title_layouts_update"
+        tools:layout="@layout/fragment_layouts_update">
+        <argument
+            android:name="layoutId"
+            android:defaultValue="0L"
+            app:argType="long" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/navigation_cards"
+        android:name="application.android.refresh.ui.cards.CardsFragment"
+        android:label="@string/title_cards"
+        tools:layout="@layout/fragment_cards">
+        <action
+            android:id="@+id/layoutSelectionAction"
+            app:destination="@id/navigation_layouts_search" />
+        <action
+            android:id="@+id/cardsInfoAction"
+            app:destination="@id/navigation_cards_info" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/navigation_routines"
+        android:name="application.android.refresh.ui.routines.RoutinesFragment"
+        android:label="@string/title_routines"
+        tools:layout="@layout/fragment_routines">
+        <action
+            android:id="@+id/routineInfoAction"
+            app:destination="@id/navigation_routine_info" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/navigation_cards_create"
+        android:name="application.android.refresh.ui.cards.create.CardsCreateFragment"
+        android:label="@string/title_cards_create"
+        tools:layout="@layout/fragment_cards_create">
+        <argument
+            android:name="cardLayoutId"
+            android:defaultValue="0L"
+            app:argType="long" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/navigation_routine_info"
+        android:name="application.android.refresh.ui.routines.info.RoutinesInfoFragment"
+        android:label="@string/title_routine_info"
+        tools:layout="@layout/fragment_routines_info">
+        <argument
+            android:name="routineId"
+            android:defaultValue="0L"
+            app:argType="long" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/navigation_layouts_search"
+        android:name="application.android.refresh.ui.layouts.search.LayoutsSearchFragment"
+        android:label="@string/title_layouts_search"
+        tools:layout="@layout/fragment_layouts_search">
+        <argument
+            android:name="navId"
+            android:defaultValue="NONE"
+            app:argType=".internal.SearchRequest" />
+        <action
+            android:id="@+id/cardsCreateAction"
+            app:destination="@id/navigation_cards_create"
+            app:popUpTo="@id/navigation_cards" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/navigation_cards_info"
+        android:name="application.android.refresh.ui.cards.info.CardsInfoFragment"
+        android:label="@string/title_cards_info"
+        tools:layout="@layout/fragment_cards_info">
+        <argument
+            android:name="cardId"
+            android:defaultValue="0L"
+            app:argType="long" />
+        <action
+            android:id="@+id/cardsUpdateAction"
+            app:destination="@id/navigation_cards_update" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/navigation_cards_update"
+        android:name="application.android.refresh.ui.cards.update.CardsUpdateFragment"
+        android:label="@string/title_cards_update"
+        tools:layout="@layout/fragment_cards_update">
+        <argument
+            android:name="cardId"
+            android:defaultValue="0L"
+            app:argType="long" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/navigation_routine_create"
+        android:name="application.android.refresh.ui.routines.create.RoutinesCreateFragment"
+        android:label="@string/title_layouts_create"
+        tools:layout="@layout/fragment_routines_create" />
+</navigation>

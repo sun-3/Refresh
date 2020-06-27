@@ -1,0 +1,194 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".ui.routines.RoutinesFragment">
+
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/routineInfoToolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize" />
+
+
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/routineCompleted"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_margin="16dp"
+        android:gravity="center"
+        android:text="@string/routine_completed"
+        android:textAlignment="center"
+        android:textAppearance="@style/TextAppearance.AppCompat.Headline"
+        android:visibility="gone" />
+
+
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/routineRemaining"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_margin="16dp"
+        android:layout_weight="1"
+        android:visibility="gone"
+        app:cardCornerRadius="8dp"
+        app:cardUseCompatPadding="true"
+        tools:visibility="visible">
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="8dp">
+
+                <ImageButton
+                    android:id="@+id/routineInfoDelay"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:backgroundTint="#00FFFFFF"
+                    android:scaleX="1.2"
+                    android:scaleY="1.2"
+                    android:src="@drawable/ic_delay"
+                    android:tint="@color/colorAccent"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.973"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintVertical_bias="0.0"
+                    tools:visibility="visible" />
+
+                <TextView
+                    android:id="@+id/routineInfoQuestionTitle"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="8dp"
+                    android:textAlignment="center"
+                    android:textColor="@color/colorAccent"
+                    android:textSize="24sp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.0"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/routineInfoDelay"
+                    app:layout_constraintVertical_bias="0.0"
+                    tools:text="Kanji" />
+
+                <TextView
+                    android:id="@+id/routineInfoQuestion"
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:layout_margin="8dp"
+                    android:autoSizeMaxTextSize="160sp"
+                    android:autoSizeMinTextSize="14sp"
+                    android:autoSizeTextType="uniform"
+                    android:textAlignment="center"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintDimensionRatio="h,5:1"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.5"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/routineInfoQuestionTitle"
+                    app:layout_constraintVertical_bias="0.0"
+                    app:layout_constraintWidth_default="percent"
+                    app:layout_constraintWidth_percent="1"
+                    tools:text="漢字"
+                    tools:visibility="visible" />
+
+                <LinearLayout
+                    android:id="@+id/routineInfoAnswerGroup"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:visibility="gone"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="1.0"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/routineInfoQuestion"
+                    app:layout_constraintVertical_bias="0.064"
+                    tools:visibility="visible">
+
+                    <TextView
+                        android:id="@+id/routineInfoAnswerTitle"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="8dp"
+                        android:layout_marginTop="24dp"
+                        android:textAlignment="center"
+                        android:textColor="@color/colorAccent"
+                        android:textSize="24sp"
+                        tools:text="Meaning" />
+
+                    <TextView
+                        android:id="@+id/routineInfoAnswer"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="8dp"
+                        android:textAlignment="center"
+
+                        android:textSize="24sp"
+                        tools:text="character, kanji" />
+
+                    <TextView
+                        android:id="@+id/routineInfoAnswerExtraTitle"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="8dp"
+                        android:textAlignment="center"
+                        android:textColor="@color/colorAccent"
+                        android:textSize="24sp"
+                        tools:text="Kana" />
+
+                    <TextView
+                        android:id="@+id/routineInfoAnswerExtra"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="8dp"
+                        android:textAlignment="center"
+
+                        android:textSize="24sp"
+                        tools:text="こんにちは" />
+
+                </LinearLayout>
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/routineInfoShow"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="16dp"
+                    android:text="@string/answer"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/routineInfoAnswerGroup"
+                    app:layout_constraintVertical_bias="0.0" />
+
+
+                <ImageButton
+                    android:id="@+id/routineInfoNext"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="24dp"
+                    android:layout_marginStart="48dp"
+                    android:layout_marginEnd="48dp"
+                    android:backgroundTint="#00FFFFFF"
+                    android:scaleX="1.5"
+                    android:scaleY="1.5"
+                    android:src="@drawable/ic_arrow_next"
+                    android:tint="@color/colorAccent"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/routineInfoShow"
+                    app:layout_constraintVertical_bias="0.0"
+                    tools:visibility="visible" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </ScrollView>
+
+    </com.google.android.material.card.MaterialCardView>
+</LinearLayout>

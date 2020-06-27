@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_centerInParent="false"
+    android:layout_centerHorizontal="false"
+    android:layout_centerVertical="false"
+    tools:context=".ui.cards.update.CardsUpdateFragment">
+
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/cardsUpdateToolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0" />
+
+    <TextView
+        android:id="@+id/cardsUpdateFrontTitle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="8dp"
+        android:textAlignment="center"
+        android:textColor="@color/colorAccent"
+        android:textSize="24sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/cardsUpdateToolbar"
+        app:layout_constraintVertical_bias="0.064"
+        tools:text="Kanji" />
+
+    <com.google.android.material.textfield.TextInputEditText
+        android:id="@+id/cardsUpdateFront"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="8dp"
+        android:textAlignment="center"
+        android:textSize="24sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/cardsUpdateFrontTitle"
+        app:layout_constraintVertical_bias="0.0"
+        tools:text="漢字" />
+
+    <TextView
+        android:id="@+id/cardsUpdateBackTitle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="8dp"
+        android:layout_marginTop="24dp"
+        android:textAlignment="center"
+        android:textColor="@color/colorAccent"
+        android:textSize="24sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/cardsUpdateFront"
+        app:layout_constraintVertical_bias="0.064"
+        tools:text="Meaning" />
+
+    <com.google.android.material.textfield.TextInputEditText
+        android:id="@+id/cardsUpdateBack"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="8dp"
+        android:textAlignment="center"
+        android:textSize="24sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/cardsUpdateBackTitle"
+        app:layout_constraintVertical_bias="0.0"
+        tools:text="character, kanji" />
+
+    <TextView
+        android:id="@+id/cardsUpdateBackExtraTitle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="8dp"
+        android:textAlignment="center"
+        android:textColor="@color/colorAccent"
+        android:textSize="24sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/cardsUpdateBack"
+        app:layout_constraintVertical_bias="0.064"
+        tools:text="Kana" />
+
+    <com.google.android.material.textfield.TextInputEditText
+        android:id="@+id/cardsUpdateBackExtra"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="8dp"
+        android:textAlignment="center"
+        android:textSize="24sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/cardsUpdateBackExtraTitle"
+        app:layout_constraintVertical_bias="0.0"
+        tools:text="こんにちは" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/cardsUpdateBackExtra"
+        app:layout_constraintVertical_bias="0.064">
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/cardsUpdateUpdate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="16dp"
+            android:text="@string/update" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/cardsUpdateDiscard"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="16dp"
+            android:text="@string/discard" />
+    </LinearLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

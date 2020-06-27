@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".ui.layouts.update.LayoutsUpdateFragment">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="24dp"
+        android:layout_marginEnd="8dp"
+        android:text="@string/layout_name"
+        android:textAlignment="center"
+        android:textColor="@color/colorAccent"
+        android:textSize="24sp" />
+
+    <com.google.android.material.textfield.TextInputEditText
+        android:id="@+id/layoutsUpdateName"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="8dp"
+        android:textAlignment="center"
+        android:textSize="24sp"
+        tools:text="Japanese" />
+
+    <TextView
+        android:id="@+id/layoutsUpdateFrontTitle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="24dp"
+        android:layout_marginEnd="8dp"
+        android:text="@string/front"
+        android:textAlignment="center"
+        android:textColor="@color/colorAccent"
+        android:textSize="24sp" />
+
+    <com.google.android.material.textfield.TextInputEditText
+        android:id="@+id/layoutsUpdateFront"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="8dp"
+        android:textAlignment="center"
+        android:textSize="24sp"
+
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/layoutsUpdateFrontTitle"
+        app:layout_constraintVertical_bias="0.0"
+        tools:text="Kanji" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="24dp"
+        android:layout_marginEnd="8dp"
+        android:text="@string/back"
+        android:textAlignment="center"
+        android:textColor="@color/colorAccent"
+        android:textSize="24sp" />
+
+    <com.google.android.material.textfield.TextInputEditText
+        android:id="@+id/layoutsUpdateBack"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="8dp"
+        android:textAlignment="center"
+
+        android:textSize="24sp"
+        tools:text="Meaning" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="24dp"
+        android:layout_marginEnd="8dp"
+        android:text="@string/extra"
+        android:textAlignment="center"
+        android:textColor="@color/colorAccent"
+        android:textSize="24sp" />
+
+    <com.google.android.material.textfield.TextInputEditText
+        android:id="@+id/layoutsUpdateBackExtra"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="8dp"
+        android:textAlignment="center"
+        android:textSize="24sp"
+        tools:text="Kana" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center">
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/layoutsUpdateUpdate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="16dp"
+            android:text="@string/update" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/layoutsUpdateDiscard"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="16dp"
+            android:text="@string/discard" />
+    </LinearLayout>
+</LinearLayout>
