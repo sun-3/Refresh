@@ -9,6 +9,16 @@
     android:layout_centerVertical="false"
     tools:context=".ui.layouts.create.LayoutsCreateFragment">
 
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/layoutsCreateToolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0"/>
+
     <com.google.android.material.textview.MaterialTextView
         android:id="@+id/layoutsCreateText"
         android:layout_width="wrap_content"
@@ -19,7 +29,7 @@
         app:layout_constraintBottom_toTopOf="@+id/layoutsCreateAnswer"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/layoutsCreateToolbar"
         app:layout_constraintVertical_bias="1.0"
         tools:text="Front" />
 

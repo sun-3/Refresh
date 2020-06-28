@@ -9,9 +9,12 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
+import androidx.navigation.ui.AppBarConfiguration
+import androidx.navigation.ui.setupWithNavController
 import application.android.refresh.R
 import application.android.refresh.data.db.DbUtils
 import application.android.refresh.data.db.entity.Layout
+import kotlinx.android.synthetic.main.fragment_cards_create.*
 import kotlinx.android.synthetic.main.fragment_layouts_create.*
 import org.kodein.di.KodeinAware
 import org.kodein.di.android.x.closestKodein
@@ -40,7 +43,20 @@ class LayoutsCreateFragment : Fragment(), KodeinAware {
     }
 
     private fun setupUI() {
+        setupToolbar()
         createLayout()
+    }
+
+    private fun setupToolbar() {
+        val navController = findNavController()
+        val appBarConfiguration = AppBarConfiguration(
+            setOf(
+                R.id.navigation_layouts,
+                R.id.navigation_cards,
+                R.id.navigation_routines
+            )
+        )
+        layoutsCreateToolbar.setupWithNavController(navController, appBarConfiguration)
     }
 
     private fun createLayout() {
