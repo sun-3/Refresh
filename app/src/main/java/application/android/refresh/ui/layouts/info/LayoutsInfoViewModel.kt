@@ -10,6 +10,7 @@ import kotlinx.coroutines.launch
 class LayoutsInfoViewModel(private val refreshRepository: RefreshRepository) : ViewModel() {
 
     val isOkayToExit = MutableLiveData<Boolean>()
+    val layoutName = MutableLiveData<String>()
 
     fun layoutDetails(id: Long): LiveData<Layout> = liveData {
         emitSource(refreshRepository.getLayout(id))

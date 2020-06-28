@@ -11,6 +11,7 @@ import kotlinx.coroutines.launch
 class CardsInfoViewModel(private val refreshRepository: RefreshRepository) : ViewModel() {
 
     val isOkayToExit = MutableLiveData<Boolean>()
+    val cardName = MutableLiveData<String>()
 
     fun cardDetails(id: Long): LiveData<Card> = liveData {
         emitSource(refreshRepository.getCard(id))

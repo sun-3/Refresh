@@ -15,6 +15,7 @@ import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupWithNavController
 import application.android.refresh.R
 import application.android.refresh.data.db.entity.Layout
+import kotlinx.android.synthetic.main.fragment_cards_info.*
 import kotlinx.android.synthetic.main.fragment_layouts_info.*
 import org.kodein.di.KodeinAware
 import org.kodein.di.android.x.closestKodein
@@ -54,6 +55,7 @@ class LayoutsInfoFragment : Fragment(), KodeinAware {
             Toast.makeText(context, "Choose a layout to view", Toast.LENGTH_SHORT).show()
         }
         viewModel.layoutDetails(layoutId).observe(viewLifecycleOwner, Observer { layout ->
+            viewModel.layoutName.postValue(layout.name)
             setFields(layout)
             setToolbarMenu(layout)
         })
@@ -69,6 +71,9 @@ class LayoutsInfoFragment : Fragment(), KodeinAware {
             )
         )
         layoutsInfoToolbar.setupWithNavController(navController, appBarConfiguration)
+        viewModel.layoutName.observe(viewLifecycleOwner, Observer {
+            layoutsInfoToolbar.title = it
+        })
     }
 
     private fun setToolbarMenu(layout: Layout) {

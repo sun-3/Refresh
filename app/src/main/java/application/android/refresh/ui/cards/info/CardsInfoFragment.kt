@@ -17,6 +17,7 @@ import application.android.refresh.R
 import application.android.refresh.data.db.entity.Card
 import application.android.refresh.data.db.entity.Layout
 import kotlinx.android.synthetic.main.fragment_cards_info.*
+import kotlinx.android.synthetic.main.fragment_routines_info.*
 import org.kodein.di.KodeinAware
 import org.kodein.di.android.x.closestKodein
 import org.kodein.di.generic.instance
@@ -57,6 +58,7 @@ class CardsInfoFragment : Fragment(), KodeinAware {
 
         viewModel.cardDetails(cardId).observe(viewLifecycleOwner, Observer { card ->
             card?.let {
+                viewModel.cardName.postValue(it.front)
                 viewModel.layoutDetails(card.layoutId)
                     .observe(viewLifecycleOwner, Observer { layout ->
                         setFields(card, layout)
@@ -76,6 +78,10 @@ class CardsInfoFragment : Fragment(), KodeinAware {
             )
         )
         cardsInfoToolbar.setupWithNavController(navController, appBarConfiguration)
+
+        viewModel.cardName.observe(viewLifecycleOwner, Observer {
+            cardsInfoToolbar.title = it
+        })
     }
 
     private fun setToolbarMenu(card: Card) {
