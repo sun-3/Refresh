@@ -55,10 +55,15 @@ class CardsUpdateFragment : Fragment(), KodeinAware {
             Toast.makeText(context, "Choose a card to update", Toast.LENGTH_SHORT).show()
         }
 
-        viewModel.cardDetails(cardId).observe(viewLifecycleOwner, Observer { card ->
-            viewModel.layoutDetails(card.layoutId).observe(viewLifecycleOwner, Observer { layout ->
-                setFields(card, layout)
-            })
+        viewModel.cardDetails(cardId).observe(viewLifecycleOwner, Observer { c ->
+            c?.let { card ->
+                viewModel.layoutDetails(card.layoutId).observe(viewLifecycleOwner, Observer { l ->
+                    l?.let { layout ->
+                        setFields(card, layout)
+                    }
+                })
+            }
+
         })
     }
 

@@ -65,10 +65,12 @@ class RoutinesInfoFragment : Fragment(), KodeinAware {
         }
 
         viewModel.routineDetails(routineId).observe(viewLifecycleOwner, Observer {
-            viewModel.routine = it
-            if (viewModel.firstLaunch) {
-                viewModel.firstLaunch = false
-                viewModel.prepareCardList()
+            it?.let { routine ->
+                viewModel.routine = routine
+                if (viewModel.firstLaunch) {
+                    viewModel.firstLaunch = false
+                    viewModel.prepareCardList()
+                }
             }
         })
 

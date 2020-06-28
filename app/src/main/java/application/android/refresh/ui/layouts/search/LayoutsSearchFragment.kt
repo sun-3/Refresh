@@ -48,7 +48,8 @@ class LayoutsSearchFragment : Fragment(), KodeinAware {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        viewModel = ViewModelProvider(this, viewModelFactory).get(LayoutsSearchViewModel::class.java)
+        viewModel =
+            ViewModelProvider(this, viewModelFactory).get(LayoutsSearchViewModel::class.java)
         setupUI()
     }
 
@@ -62,8 +63,10 @@ class LayoutsSearchFragment : Fragment(), KodeinAware {
             findNavController().navigateUp()
         }
         viewModel.layoutList.observe(viewLifecycleOwner, Observer {
-            viewModel.list = it
-            initRecyclerView()
+            it?.let { layoutList ->
+                viewModel.list = layoutList
+                initRecyclerView()
+            }
         })
     }
 
@@ -131,14 +134,18 @@ class LayoutsSearchFragment : Fragment(), KodeinAware {
         object : SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(query: String): Boolean {
                 viewModel.searchLayouts(query).observe(viewLifecycleOwner, Observer {
-                    addLayoutsToGroupie(it)
+                    it?.let { layoutList ->
+                        addLayoutsToGroupie(layoutList)
+                    }
                 })
                 return true
             }
 
             override fun onQueryTextChange(query: String): Boolean {
                 viewModel.searchLayouts(query).observe(viewLifecycleOwner, Observer {
-                    addLayoutsToGroupie(it)
+                    it?.let { layoutList ->
+                        addLayoutsToGroupie(layoutList)
+                    }
                 })
                 return true
             }

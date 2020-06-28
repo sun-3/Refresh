@@ -44,10 +44,13 @@ class RoutinesFragment : Fragment(), KodeinAware {
         setupToolbar()
         initRecyclerView()
         viewModel.routineList.observe(viewLifecycleOwner, Observer {
-            if (!it.isNullOrEmpty()) {
-                viewModel.list = it
-                addLayoutsToGroupie(it)
+            it?.let { routineList ->
+                if (routineList.isNotEmpty()) {
+                    viewModel.list = routineList
+                    addLayoutsToGroupie(routineList)
+                }
             }
+
         })
     }
 

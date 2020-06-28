@@ -56,8 +56,10 @@ class LayoutsUpdateFragment : Fragment(), KodeinAware {
             Toast.makeText(context, "Choose a layout to edit", Toast.LENGTH_SHORT).show()
         }
 
-        viewModel.layoutDetails(layoutId).observe(viewLifecycleOwner, Observer { layout ->
-            setFields(layout)
+        viewModel.layoutDetails(layoutId).observe(viewLifecycleOwner, Observer {
+            it?.let { layout ->
+                setFields(layout)
+            }
         })
     }
 

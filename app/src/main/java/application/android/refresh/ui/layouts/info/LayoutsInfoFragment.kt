@@ -54,10 +54,12 @@ class LayoutsInfoFragment : Fragment(), KodeinAware {
             findNavController().navigateUp()
             Toast.makeText(context, "Choose a layout to view", Toast.LENGTH_SHORT).show()
         }
-        viewModel.layoutDetails(layoutId).observe(viewLifecycleOwner, Observer { layout ->
-            viewModel.layoutName.postValue(layout.name)
-            setFields(layout)
-            setToolbarMenu(layout)
+        viewModel.layoutDetails(layoutId).observe(viewLifecycleOwner, Observer { l ->
+            l?.let { layout ->
+                viewModel.layoutName.postValue(layout.name)
+                setFields(layout)
+                setToolbarMenu(layout)
+            }
         })
     }
 

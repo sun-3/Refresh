@@ -56,14 +56,15 @@ class CardsInfoFragment : Fragment(), KodeinAware {
             Toast.makeText(context, "Choose a card to view", Toast.LENGTH_SHORT).show()
         }
 
-        viewModel.cardDetails(cardId).observe(viewLifecycleOwner, Observer { card ->
-            card?.let {
-                viewModel.cardName.postValue(it.front)
-                viewModel.layoutDetails(card.layoutId)
-                    .observe(viewLifecycleOwner, Observer { layout ->
+        viewModel.cardDetails(cardId).observe(viewLifecycleOwner, Observer { c ->
+            c?.let { card ->
+                viewModel.cardName.postValue(card.front)
+                viewModel.layoutDetails(card.layoutId).observe(viewLifecycleOwner, Observer { l ->
+                    l?.let { layout ->
                         setFields(card, layout)
                         setToolbarMenu(card)
-                    })
+                    }
+                })
             }
         })
     }

@@ -51,8 +51,10 @@ class LayoutsFragment : Fragment(), KodeinAware {
         setupToolbar()
 
         viewModel.layoutList.observe(viewLifecycleOwner, Observer {
-            viewModel.list = it
-            initRecyclerView()
+            it?.let { layoutList ->
+                viewModel.list = layoutList
+                initRecyclerView()
+            }
         })
     }
 
@@ -126,14 +128,18 @@ class LayoutsFragment : Fragment(), KodeinAware {
         object : SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(query: String): Boolean {
                 viewModel.searchLayouts(query).observe(viewLifecycleOwner, Observer {
-                    addLayoutsToGroupie(it)
+                    it?.let { layoutList ->
+                        addLayoutsToGroupie(layoutList)
+                    }
                 })
                 return true
             }
 
             override fun onQueryTextChange(query: String): Boolean {
                 viewModel.searchLayouts(query).observe(viewLifecycleOwner, Observer {
-                    addLayoutsToGroupie(it)
+                    it?.let { layoutList ->
+                        addLayoutsToGroupie(layoutList)
+                    }
                 })
                 return true
             }

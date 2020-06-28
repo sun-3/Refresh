@@ -55,8 +55,10 @@ class CardsCreateFragment : Fragment(), KodeinAware {
             Toast.makeText(context, "Choose a card layout", Toast.LENGTH_SHORT).show()
         }
 
-        viewModel.layoutDetails(layoutId).observe(viewLifecycleOwner, Observer { layout ->
-            setupCardInput(layout)
+        viewModel.layoutDetails(layoutId).observe(viewLifecycleOwner, Observer { l ->
+            l?.let { layout ->
+                setupCardInput(layout)
+            }
         })
 
 
@@ -74,8 +76,8 @@ class CardsCreateFragment : Fragment(), KodeinAware {
         cardsCreateToolbar.setupWithNavController(navController, appBarConfiguration)
     }
 
-    private fun setupCardInput(layout: Layout?) {
-        val fieldCount: Int = if (layout?.backExtra.isNullOrBlank()) 2 else 3
+    private fun setupCardInput(layout: Layout) {
+        val fieldCount: Int = if (layout.backExtra.isBlank()) 2 else 3
         var currentCount = 1
         var cardFront = ""
         var cardBack = ""
@@ -85,8 +87,10 @@ class CardsCreateFragment : Fragment(), KodeinAware {
 
         cardsCreateNext.setOnClickListener {
             if (cardsCreateAnswer.text.toString().isBlank()) {
-                Toast.makeText(context, "Enter valid input for " + cardsCreateText.text, Toast
-                    .LENGTH_SHORT).show()
+                Toast.makeText(
+                    context, "Enter valid input for " + cardsCreateText.text, Toast
+                        .LENGTH_SHORT
+                ).show()
             } else {
                 when (currentCount) {
                     fieldCount -> {
@@ -96,7 +100,14 @@ class CardsCreateFragment : Fragment(), KodeinAware {
                                 cardsCreateAnswer.text.toString()
                         }
 
-                        val card = Card(DbUtils.GenerateId(), layout?.id!!, cardFront, cardBack, layout.backExtra, cardBackExtra)
+                        val card = Card(
+                            DbUtils.GenerateId(),
+                            layout.id,
+                            cardFront,
+                            cardBack,
+                            layout.backExtra,
+                            cardBackExtra
+                        )
                         viewModel.addCard(card)
                         viewModel.isOkayToExit.observe(viewLifecycleOwner, Observer {
                             if (it) {

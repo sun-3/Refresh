@@ -50,9 +50,11 @@ class CardsFragment : Fragment(), KodeinAware {
     private fun setupUI() {
         initVars()
         setupToolbar()
-        viewModel.cardList.observe(viewLifecycleOwner, Observer {
-            viewModel.list = it
-            initRecyclerView()
+        viewModel.cardList.observe(viewLifecycleOwner, Observer { c ->
+            c?.let { card ->
+                viewModel.list = card
+                initRecyclerView()
+            }
         })
     }
 
@@ -63,11 +65,13 @@ class CardsFragment : Fragment(), KodeinAware {
 
     private fun setupToolbar() {
         val navController = findNavController()
-        val appBarConfiguration = AppBarConfiguration(setOf(
-            R.id.navigation_layouts,
-            R.id.navigation_cards,
-            R.id.navigation_routines
-        ))
+        val appBarConfiguration = AppBarConfiguration(
+            setOf(
+                R.id.navigation_layouts,
+                R.id.navigation_cards,
+                R.id.navigation_routines
+            )
+        )
         cardsToolbar.setupWithNavController(navController, appBarConfiguration)
         cardsToolbar.inflateMenu(R.menu.search_add)
         val menu = cardsToolbar.menu
@@ -126,14 +130,18 @@ class CardsFragment : Fragment(), KodeinAware {
         object : SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(query: String): Boolean {
                 viewModel.searchCards(query).observe(viewLifecycleOwner, Observer {
-                    addLayoutsToGroupie(it)
+                    it?.let { cardList ->
+                        addLayoutsToGroupie(cardList)
+                    }
                 })
                 return true
             }
 
             override fun onQueryTextChange(query: String): Boolean {
                 viewModel.searchCards(query).observe(viewLifecycleOwner, Observer {
-                    addLayoutsToGroupie(it)
+                    it?.let { cardList ->
+                        addLayoutsToGroupie(cardList)
+                    }
                 })
                 return true
             }

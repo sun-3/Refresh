@@ -37,8 +37,7 @@ class RoutinesCreateFragment : Fragment(), KodeinAware {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        viewModel =
-            ViewModelProvider(this, viewModelFactory).get(RoutinesCreateViewModel::class.java)
+        viewModel = ViewModelProvider(this, viewModelFactory).get(RoutinesCreateViewModel::class.java)
 
         viewModel.shouldSetupUI.observe(viewLifecycleOwner, Observer {
             if (it) {
