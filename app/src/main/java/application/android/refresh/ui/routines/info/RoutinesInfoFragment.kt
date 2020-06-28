@@ -112,6 +112,11 @@ class RoutinesInfoFragment : Fragment(), KodeinAware {
             return@setOnMenuItemClickListener true
         }
 
+        menu.findItem(R.id.action_delete).setOnMenuItemClickListener {
+            confirmDeleteDialog()
+            return@setOnMenuItemClickListener true
+        }
+
         viewModel.cardsLeft.observe(viewLifecycleOwner, Observer {
             routineInfoToolbar.subtitle = "Remaining Cards: $it"
         })
@@ -208,6 +213,25 @@ class RoutinesInfoFragment : Fragment(), KodeinAware {
             }
         }
 
+        builder.create()
+        builder.show()
+    }
+
+    private fun confirmDeleteDialog() {
+        val builder = AlertDialog.Builder(requireContext())
+        builder.setTitle("Delete Routine")
+        builder.setMessage("Are you sure?")
+            .setPositiveButton("Delete") { _, _ ->
+                viewModel.routine?.let { routine ->
+                    viewModel.deleteRoutine(routine)
+                    viewModel.isOkayToExit.observe(viewLifecycleOwner, Observer {
+                        if (it) {
+                            findNavController().navigateUp()
+                        }
+                    })
+                }
+            }
+            .setNegativeButton("Cancel") { _, _ -> }
         builder.create()
         builder.show()
     }

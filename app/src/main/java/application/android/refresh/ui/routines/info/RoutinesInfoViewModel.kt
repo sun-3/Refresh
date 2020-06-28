@@ -13,6 +13,7 @@ class RoutinesInfoViewModel(private val refreshRepository: RefreshRepository) : 
     var firstLaunch: Boolean = true
     val shouldSetupCard = MutableLiveData<Boolean>()
     val isDataReady = MutableLiveData<Boolean>()
+    val isOkayToExit = MutableLiveData<Boolean>()
     val isDone = MutableLiveData<Boolean>()
     val cardsLeft = MutableLiveData<Int>()
     val routineName = MutableLiveData<String>()
@@ -196,6 +197,13 @@ class RoutinesInfoViewModel(private val refreshRepository: RefreshRepository) : 
                 val updatedRoutine = Routine(it.id, it.name, it.layoutIds, updatedFinishedCards)
                 refreshRepository.updateRoutine(updatedRoutine)
             }
+        }
+    }
+
+    fun deleteRoutine(routine: Routine) {
+        viewModelScope.launch(Dispatchers.IO) {
+            refreshRepository.deleteRoutine(routine)
+            isOkayToExit.postValue(true)
         }
     }
 }
