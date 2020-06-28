@@ -23,12 +23,7 @@ class CardsInfoViewModel(private val refreshRepository: RefreshRepository) : Vie
 
     fun deleteCard(card: Card) {
         viewModelScope.launch {
-            isOkayToExit.postValue(false)
-            coroutineScope {
-                launch {
-                    refreshRepository.deleteCard(card)
-                }
-            }
+            refreshRepository.deleteCard(card)
             isOkayToExit.postValue(true)
         }
     }
