@@ -56,7 +56,7 @@ class LayoutsInfoFragment : Fragment(), KodeinAware {
         }
         viewModel.layoutDetails(layoutId).observe(viewLifecycleOwner, Observer { l ->
             l?.let { layout ->
-                viewModel.layoutName.postValue(layout.name)
+                viewModel.layoutName.postValue("${layout.name} Layout")
                 setFields(layout)
                 setToolbarMenu(layout)
             }

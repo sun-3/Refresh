@@ -58,9 +58,9 @@ class CardsInfoFragment : Fragment(), KodeinAware {
 
         viewModel.cardDetails(cardId).observe(viewLifecycleOwner, Observer { c ->
             c?.let { card ->
-                viewModel.cardName.postValue(card.front)
                 viewModel.layoutDetails(card.layoutId).observe(viewLifecycleOwner, Observer { l ->
                     l?.let { layout ->
+                        viewModel.cardName.postValue("${layout.name} Card")
                         setFields(card, layout)
                         setToolbarMenu(card)
                     }
