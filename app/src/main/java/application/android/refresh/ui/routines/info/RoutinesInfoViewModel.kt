@@ -65,8 +65,10 @@ class RoutinesInfoViewModel(private val refreshRepository: RefreshRepository) : 
         return false
     }
 
-    private fun validateWithRoutineCard(routineCard: RoutineCard): Boolean {
-        return (routineCard.sessionDelay < System.currentTimeMillis() && !routineCard.completed)
+    private fun validateReset(routineCard: RoutineCard): Boolean {
+        return (routineCard.sessionDelay < System.currentTimeMillis()
+                && !routineCard.completed
+                && (isDone.value == true || routineCard.id != cardId))
     }
 
     fun getNextCard() {
@@ -127,7 +129,7 @@ class RoutinesInfoViewModel(private val refreshRepository: RefreshRepository) : 
                 val newCardList: ArrayList<Card> = arrayListOf()
                 updatedFinishedCards.map { routineCard ->
                     routineCard.completed = false
-                    if (validateWithRoutineCard(routineCard)) {
+                    if (validateReset(routineCard)) {
                         val card: Card? = refreshRepository.getCardAtOnce(routineCard.id)
                         if (card != null) {
                             newCardList.add(card)
@@ -137,7 +139,10 @@ class RoutinesInfoViewModel(private val refreshRepository: RefreshRepository) : 
                 val updatedRoutine = Routine(it.id, it.name, it.layoutIds, updatedFinishedCards)
                 refreshRepository.updateRoutine(updatedRoutine)
                 cardListAddAll(newCardList)
-                getNextCard()
+
+                if (isDone.value == true) {
+                    getNextCard()
+                }
             }
         }
     }
@@ -149,7 +154,7 @@ class RoutinesInfoViewModel(private val refreshRepository: RefreshRepository) : 
                 val newCardList: ArrayList<Card> = arrayListOf()
                 updatedFinishedCards.map { routineCard ->
                     routineCard.sessionDelay = 0L
-                    if (validateWithRoutineCard(routineCard)) {
+                    if (validateReset(routineCard)) {
                         val card: Card? = refreshRepository.getCardAtOnce(routineCard.id)
                         if (card != null) {
                             newCardList.add(card)
@@ -159,15 +164,20 @@ class RoutinesInfoViewModel(private val refreshRepository: RefreshRepository) : 
                 val updatedRoutine = Routine(it.id, it.name, it.layoutIds, updatedFinishedCards)
                 refreshRepository.updateRoutine(updatedRoutine)
                 cardListAddAll(newCardList)
-                getNextCard()
+
+                if (isDone.value == true) {
+                    getNextCard()
+                }
             }
         }
     }
 
     private fun cardListAddAll(list: List<Card>) {
-        cardList.removeAll(list)
-        cardList.addAll(list)
-        cardsLeft.postValue(cardList.size)
+        if (list.isNotEmpty()) {
+            cardList.removeAll(list)
+            cardList.addAll(list)
+            cardsLeft.postValue(cardList.size)
+        }
     }
 
     private fun cardListGetLast(): Card {
