@@ -1,10 +1,12 @@
 package application.android.refresh.ui.cards
 
+import android.graphics.drawable.Drawable
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.widget.SearchView
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
@@ -12,8 +14,10 @@ import androidx.navigation.fragment.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupWithNavController
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import application.android.refresh.R
 import application.android.refresh.data.db.entity.Card
+import application.android.refresh.internal.ScrollDirection
 import application.android.refresh.internal.SearchRequest
 import com.xwray.groupie.GroupAdapter
 import com.xwray.groupie.kotlinandroidextensions.GroupieViewHolder
@@ -100,11 +104,65 @@ class CardsFragment : Fragment(), KodeinAware {
             adapter = groupieAdapter
         }
 
+        // Showing a floating action button whenever user scrolls vertically
+        cardsRecyclerView.addOnScrollListener(object : RecyclerView.OnScrollListener() {
+            // Using boolean flags to avoid unnecessary function calls
+            var setupTop = true
+            var setupBottom = true
+            override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
+                if (dy > 0 && setupBottom) {
+                    setupBottom = false
+                    setupTop = true
+                    setupScrollFab(ScrollDirection.DOWN)
+                } else if (dy < 0 && setupTop) {
+                    setupTop = false
+                    setupBottom = true
+                    setupScrollFab(ScrollDirection.UP)
+                }
+            }
+
+            // Show the floating action button only when there are enough items and while the
+            // user is scrolling
+            override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
+                if (!setupTop || !setupBottom) {
+                    if (newState == RecyclerView.SCROLL_STATE_IDLE) {
+                        cardsScrollFab.hide()
+                    } else {
+                        cardsScrollFab.show()
+                    }
+                }
+            }
+        })
+
         groupieAdapter.setOnItemClickListener { item, _ ->
             (item as? CardItem)?.let {
                 val cardsInfoAction = CardsFragmentDirections.cardsInfoAction(it.card.id)
                 findNavController().navigate(cardsInfoAction)
             }
+        }
+    }
+
+    // Change icon and scroll-to-position
+    private fun setupScrollFab(direction: ScrollDirection) {
+        cardsScrollFab.show()
+        val fabDrawable: Drawable?
+        val scrollToPosition: Int
+        when (direction) {
+            ScrollDirection.UP -> {
+                fabDrawable = ContextCompat.getDrawable(requireContext(), R.drawable.ic_arrow_up)
+                scrollToPosition = 0
+            }
+
+            ScrollDirection.DOWN -> {
+                fabDrawable = ContextCompat.getDrawable(requireContext(), R.drawable.ic_arrow_down)
+                scrollToPosition = groupieAdapter.itemCount - 1
+            }
+        }
+
+        cardsScrollFab.setImageDrawable(fabDrawable)
+        cardsScrollFab.setOnClickListener {
+            cardsRecyclerView.scrollToPosition(scrollToPosition)
+            cardsScrollFab.hide()
         }
     }
 
