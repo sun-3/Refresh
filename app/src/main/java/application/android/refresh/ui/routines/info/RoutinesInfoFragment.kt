@@ -117,6 +117,11 @@ class RoutinesInfoFragment : Fragment(), KodeinAware {
             return@setOnMenuItemClickListener true
         }
 
+        menu.findItem(R.id.action_change_question).setOnMenuItemClickListener {
+            changeQuestionDialog()
+            return@setOnMenuItemClickListener true
+        }
+
         viewModel.cardsLeft.observe(viewLifecycleOwner, Observer {
             routineInfoToolbar.subtitle = "Remaining Cards: $it"
         })
@@ -148,10 +153,22 @@ class RoutinesInfoFragment : Fragment(), KodeinAware {
     }
 
     private fun changeCardValues() {
-        routineInfoQuestionTitle.text = viewModel.questionTitle
-        routineInfoQuestion.text = viewModel.question
-        routineInfoAnswerTitle.text = viewModel.answerTitle
-        routineInfoAnswer.text = viewModel.answer
+        when (viewModel.questionMode) {
+            1 -> {
+                routineInfoQuestionTitle.text = viewModel.questionTitle
+                routineInfoQuestion.text = viewModel.question
+                routineInfoAnswerTitle.text = viewModel.answerTitle
+                routineInfoAnswer.text = viewModel.answer
+            }
+
+            2 -> {
+                routineInfoQuestionTitle.text = viewModel.answerTitle
+                routineInfoQuestion.text = viewModel.answer
+                routineInfoAnswerTitle.text = viewModel.questionTitle
+                routineInfoAnswer.text = viewModel.question
+            }
+        }
+
         routineInfoAnswerExtraTitle.text = viewModel.extraTitle
         routineInfoAnswerExtra.text = viewModel.extra
     }
@@ -232,6 +249,25 @@ class RoutinesInfoFragment : Fragment(), KodeinAware {
                 }
             }
             .setNegativeButton("Cancel") { _, _ -> }
+        builder.create()
+        builder.show()
+    }
+
+    private fun changeQuestionDialog() {
+        val builder = AlertDialog.Builder(requireContext())
+        builder.apply {
+            setTitle("Change Question")
+            setPositiveButton(viewModel.answerTitle) { _, _ ->
+                viewModel.questionMode = 2
+                changeCardValues()
+            }
+            setNegativeButton(viewModel.questionTitle) { _, _ ->
+                viewModel.questionMode = 1
+                changeCardValues()
+            }
+            setNeutralButton(R.string.cancel) { _, _ -> }
+        }
+
         builder.create()
         builder.show()
     }

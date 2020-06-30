@@ -11,13 +11,14 @@ import kotlinx.coroutines.launch
 
 class RoutinesInfoViewModel(private val refreshRepository: RefreshRepository) : ViewModel() {
     var firstLaunch: Boolean = true
+    var questionMode = 1
+    var routine: Routine? = null
     val shouldSetupCard = MutableLiveData<Boolean>()
     val isDataReady = MutableLiveData<Boolean>()
     val isOkayToExit = MutableLiveData<Boolean>()
     val isDone = MutableLiveData<Boolean>()
     val cardsLeft = MutableLiveData<Int>()
     val routineName = MutableLiveData<String>()
-    var routine: Routine? = null
     private val cardList = arrayListOf<Card>()
     private val layoutList = arrayListOf<Layout>()
 
