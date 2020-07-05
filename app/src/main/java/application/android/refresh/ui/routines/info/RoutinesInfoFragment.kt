@@ -134,7 +134,6 @@ class RoutinesInfoFragment : Fragment(), KodeinAware {
     private fun setupCard() {
         viewModel.getNextCard()
         routineInfoNext.setOnClickListener {
-            answerVisibility(false)
             viewModel.completeCard(viewModel.cardId)
             routineInfoNext.isEnabled = false
             viewModel.getNextCard()
@@ -146,6 +145,7 @@ class RoutinesInfoFragment : Fragment(), KodeinAware {
 
         viewModel.isDataReady.observe(viewLifecycleOwner, Observer {
             if (it) {
+                answerVisibility(false)
                 changeCardValues()
                 routineInfoNext.isEnabled = true
             }
