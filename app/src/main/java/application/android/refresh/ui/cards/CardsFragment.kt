@@ -30,11 +30,7 @@ class CardsFragment : Fragment(), KodeinAware {
     override val kodein by closestKodein()
     private val viewModelFactory: CardsViewModelFactory by
     instance<CardsViewModelFactory>()
-
     private lateinit var viewModel: CardsViewModel
-    private lateinit var groupieAdapter: GroupAdapter<GroupieViewHolder>
-    private lateinit var groupieList: List<CardItem>
-    private var shouldInitRecyclerView: Boolean = false
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -52,19 +48,14 @@ class CardsFragment : Fragment(), KodeinAware {
     }
 
     private fun setupUI() {
-        initVars()
         setupToolbar()
+        initRecyclerView()
         viewModel.cardList.observe(viewLifecycleOwner, Observer { c ->
-            c?.let { card ->
-                viewModel.list = card
-                initRecyclerView()
+            c?.let { cardList ->
+                viewModel.list = cardList
+                addLayoutsToGroupie(cardList)
             }
         })
-    }
-
-    private fun initVars() {
-        groupieList = listOf()
-        shouldInitRecyclerView = true
     }
 
     private fun setupToolbar() {
@@ -95,13 +86,10 @@ class CardsFragment : Fragment(), KodeinAware {
     }
 
     private fun initRecyclerView() {
-        if (viewModel.list.isNullOrEmpty() || !shouldInitRecyclerView) return
-        shouldInitRecyclerView = false
-        groupieAdapter = GroupAdapter<GroupieViewHolder>()
         addLayoutsToGroupie(viewModel.list)
         cardsRecyclerView.apply {
             layoutManager = LinearLayoutManager(this@CardsFragment.context)
-            adapter = groupieAdapter
+            adapter = viewModel.groupieAdapter
         }
 
         // Showing a floating action button whenever user scrolls vertically
@@ -134,7 +122,7 @@ class CardsFragment : Fragment(), KodeinAware {
             }
         })
 
-        groupieAdapter.setOnItemClickListener { item, _ ->
+        viewModel.groupieAdapter.setOnItemClickListener { item, _ ->
             (item as? CardItem)?.let {
                 val cardsInfoAction = CardsFragmentDirections.cardsInfoAction(it.card.id)
                 findNavController().navigate(cardsInfoAction)
@@ -155,7 +143,7 @@ class CardsFragment : Fragment(), KodeinAware {
 
             ScrollDirection.DOWN -> {
                 fabDrawable = ContextCompat.getDrawable(requireContext(), R.drawable.ic_arrow_down)
-                scrollToPosition = groupieAdapter.itemCount - 1
+                scrollToPosition = viewModel.groupieAdapter.itemCount - 1
             }
         }
 
@@ -167,12 +155,12 @@ class CardsFragment : Fragment(), KodeinAware {
     }
 
     private fun addLayoutsToGroupie(cardList: List<Card>) {
-        groupieAdapter.apply {
-            if (!groupieList.isNullOrEmpty()) {
-                removeAll(groupieList)
+        viewModel.groupieAdapter.apply {
+            if (!viewModel.groupieList.isNullOrEmpty()) {
+                removeAll(viewModel.groupieList)
             }
-            groupieList = cardList.toCardItems()
-            addAll(groupieList)
+            viewModel.groupieList = cardList.toCardItems()
+            addAll(viewModel.groupieList)
         }
     }
 
