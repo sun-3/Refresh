@@ -18,6 +18,7 @@ class CardItem(val card: Card): Item() {
             viewHolder.itemView.cardExtraLayout.visibility = View.VISIBLE
             viewHolder.itemView.cardBackExtraTitle.text = card.backExtraTitle
             viewHolder.itemView.cardBackExtra.text = card.backExtra
+            viewHolder.itemView.cardLayout.text = card.layoutName
         } else {
             viewHolder.itemView.cardExtraLayout.visibility = View.GONE
         }
