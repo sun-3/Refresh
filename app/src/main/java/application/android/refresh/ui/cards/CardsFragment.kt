@@ -112,7 +112,7 @@ class CardsFragment : Fragment(), KodeinAware {
             // Show the floating action button only when there are enough items and while the
             // user is scrolling
             override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
-                if (!setupTop || !setupBottom) {
+                if ((!setupTop || !setupBottom) && cardsScrollFab != null) {
                     if (newState == RecyclerView.SCROLL_STATE_IDLE) {
                         cardsScrollFab.hide()
                     } else {
