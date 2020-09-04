@@ -100,6 +100,7 @@ class CardsUpdateFragment : Fragment(), KodeinAware {
                     Card(
                         card.id,
                         card.layoutId,
+                        card.layoutName,
                         cardsUpdateFront.text.toString(),
                         cardsUpdateBack.text.toString(),
                         cardsUpdateBackExtraTitle.text.toString(),

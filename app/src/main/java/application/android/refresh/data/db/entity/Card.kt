@@ -7,6 +7,7 @@ import androidx.room.PrimaryKey
 data class Card(
     @PrimaryKey val id: Long,
     val layoutId: Long,
+    val layoutName: String,
     val front: String,
     val back: String,
     val backExtraTitle: String,

@@ -24,7 +24,7 @@ class RefreshRepositoryImpl(private val layoutDao: LayoutDao, private val cardDa
         withContext(Dispatchers.IO) {
             val id = layout.id
             getCardsWithLayoutId(id).map {
-                val card = Card(it.id, it.layoutId, it.front, it.back, layout.backExtra, it.backExtra)
+                val card = Card(it.id, it.layoutId, it.layoutName, it.front, it.back, layout.backExtra, it.backExtra)
                 updateCard(card)
             }
             return@withContext layoutDao.update(layout)
