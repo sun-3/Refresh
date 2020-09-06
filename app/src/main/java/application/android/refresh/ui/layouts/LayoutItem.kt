@@ -1,5 +1,4 @@
 package application.android.refresh.ui.layouts
-
 import application.android.refresh.R
 import application.android.refresh.data.db.entity.Layout
 import com.xwray.groupie.kotlinandroidextensions.GroupieViewHolder
@@ -11,8 +10,9 @@ class LayoutItem(val layout: Layout) : Item() {
     override fun getLayout() = R.layout.item_layout
 
     override fun bind(viewHolder: GroupieViewHolder, position: Int) {
-        viewHolder.itemView.layoutName.text = layout.front
-        viewHolder.itemView.layoutBack.text =
-            layout.front + " / " + layout.back + " / " + layout.backExtra
+        val separator = viewHolder.itemView.context.getText(R.string.separator)
+        val layoutText = "${layout.front} $separator ${layout.back} $separator ${layout.backExtra}"
+        viewHolder.itemView.layoutName.text = layout.name
+        viewHolder.itemView.layoutText.text = layoutText
     }
 }
