@@ -25,11 +25,7 @@ class LayoutsFragment : Fragment(), KodeinAware {
     override val kodein by closestKodein()
     private val viewModelFactory: LayoutsViewModelFactory by
     instance<LayoutsViewModelFactory>()
-
     private lateinit var viewModel: LayoutsViewModel
-    private lateinit var groupieAdapter: GroupAdapter<GroupieViewHolder>
-    private lateinit var groupieList: List<LayoutItem>
-    private var shouldInitRecyclerView: Boolean = false
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -47,20 +43,14 @@ class LayoutsFragment : Fragment(), KodeinAware {
     }
 
     private fun setupUI() {
-        initVars()
         setupToolbar()
-
+        initRecyclerView()
         viewModel.layoutList.observe(viewLifecycleOwner, Observer {
             it?.let { layoutList ->
                 viewModel.list = layoutList
-                initRecyclerView()
+                addLayoutsToGroupie(layoutList)
             }
         })
-    }
-
-    private fun initVars() {
-        groupieList = listOf()
-        shouldInitRecyclerView = true
     }
 
     private fun setupToolbar() {
@@ -89,16 +79,13 @@ class LayoutsFragment : Fragment(), KodeinAware {
     }
 
     private fun initRecyclerView() {
-        if (viewModel.list.isNullOrEmpty() || !shouldInitRecyclerView) return
-        shouldInitRecyclerView = false
-        groupieAdapter = GroupAdapter<GroupieViewHolder>()
         addLayoutsToGroupie(viewModel.list)
         layoutsRecyclerView.apply {
             layoutManager = LinearLayoutManager(this@LayoutsFragment.context)
-            adapter = groupieAdapter
+            adapter = viewModel.groupieAdapter
         }
 
-        groupieAdapter.setOnItemClickListener { item, _ ->
+        viewModel.groupieAdapter.setOnItemClickListener { item, _ ->
             (item as? LayoutItem)?.let {
                 val layoutsInfoAction = LayoutsFragmentDirections.layoutsInfoAction(it.layout.id)
                 findNavController().navigate(layoutsInfoAction)
@@ -107,12 +94,12 @@ class LayoutsFragment : Fragment(), KodeinAware {
     }
 
     private fun addLayoutsToGroupie(layoutList: List<Layout>) {
-        groupieAdapter.apply {
-            if (!groupieList.isNullOrEmpty()) {
-                removeAll(groupieList)
+        viewModel.groupieAdapter.apply {
+            if (!viewModel.groupieList.isNullOrEmpty()) {
+                removeAll(viewModel.groupieList)
             }
-            groupieList = layoutList.toLayoutItems()
-            addAll(groupieList)
+            viewModel.groupieList = layoutList.toLayoutItems()
+            addAll(viewModel.groupieList)
         }
     }
 
