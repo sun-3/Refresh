@@ -1,6 +1,7 @@
 package application.android.refresh.ui.routines
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -14,6 +15,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import application.android.refresh.R
 import application.android.refresh.data.db.entity.Routine
 import kotlinx.android.synthetic.main.fragment_routines.*
+import kotlinx.android.synthetic.main.fragment_routines_info.*
 import org.kodein.di.KodeinAware
 import org.kodein.di.android.x.closestKodein
 import org.kodein.di.generic.instance
@@ -47,7 +49,7 @@ class RoutinesFragment : Fragment(), KodeinAware {
             it?.let { routineList ->
                 if (routineList.isNotEmpty()) {
                     viewModel.list = routineList
-                    addLayoutsToGroupie(routineList)
+                    viewModel.prepareRoutineCardList()
                 }
             }
 
@@ -74,7 +76,11 @@ class RoutinesFragment : Fragment(), KodeinAware {
     }
 
     private fun initRecyclerView() {
-        addLayoutsToGroupie(viewModel.list)
+        viewModel.updateAdapter.observe(viewLifecycleOwner, Observer {
+            if (it) {
+                addLayoutsToGroupie()
+            }
+        })
         routineRecyclerView.apply {
             layoutManager = LinearLayoutManager(this@RoutinesFragment.context)
             adapter = viewModel.groupieAdapter
@@ -83,32 +89,20 @@ class RoutinesFragment : Fragment(), KodeinAware {
         viewModel.groupieAdapter.setOnItemClickListener { item, _ ->
             (item as? RoutineItem)?.let {
                 val routineInfoAction = RoutinesFragmentDirections.routineInfoAction(
-                    it.routine
-                        .id
+                    it.routineCard.id
                 )
                 findNavController().navigate(routineInfoAction)
             }
         }
     }
 
-    private fun addLayoutsToGroupie(routineList: List<Routine>) {
-        if (routineList.isNullOrEmpty()) {
-            return
-        }
+    private fun addLayoutsToGroupie() {
         viewModel.groupieAdapter.apply {
             if (!viewModel.groupieList.isNullOrEmpty()) {
                 removeAll(viewModel.groupieList)
             }
-            viewModel.groupieList = routineList.toRoutineItems()
+            viewModel.groupieList = viewModel.updatedGroupieList.toList()
             addAll(viewModel.groupieList)
-        }
-    }
-
-
-    // Extension function to convert Layout to LayoutItem
-    private fun List<Routine>.toRoutineItems(): List<RoutineItem> {
-        return this.map {
-            RoutineItem(it)
         }
     }
 }
