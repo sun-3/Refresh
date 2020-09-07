@@ -15,6 +15,9 @@ interface CardDao {
     @Query("SELECT * FROM cards where layoutId = :layoutId")
     fun getCardsWithLayoutId(layoutId: Long): List<Card>
 
+    @Query("SELECT COUNT(id) FROM cards WHERE layoutId = :layoutId")
+    fun  cardsCountWithLayoutId(layoutId: Long): Int
+
     @Query("SELECT * FROM cards WHERE id = :cardId")
     fun getCard(cardId: Long): LiveData<Card>
 

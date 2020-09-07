@@ -71,6 +71,12 @@ class RefreshRepositoryImpl(private val layoutDao: LayoutDao, private val cardDa
         }
     }
 
+    override suspend fun cardsCountWithLayoutId(layoutId: Long): Int {
+        return withContext(Dispatchers.IO) {
+            return@withContext cardDao.cardsCountWithLayoutId(layoutId)
+        }
+    }
+
 
     override suspend fun addCard(card: Card) {
         withContext(Dispatchers.IO) {

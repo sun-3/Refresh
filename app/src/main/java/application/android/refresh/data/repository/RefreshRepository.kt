@@ -26,6 +26,7 @@ interface RefreshRepository {
     suspend fun getCardsAtOnce(): List<Card>
     suspend fun getCardsWithLayoutId(layoutId: Long): List<Card>
     suspend fun searchCardsByText(searchText: String): LiveData<List<Card>>
+    suspend fun cardsCountWithLayoutId(layoutId: Long): Int
 
     // Routines
     suspend fun addRoutine(routine: Routine)
