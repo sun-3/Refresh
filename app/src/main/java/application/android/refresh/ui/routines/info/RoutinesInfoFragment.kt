@@ -257,11 +257,11 @@ class RoutinesInfoFragment : Fragment(), KodeinAware {
         val builder = AlertDialog.Builder(requireContext())
         builder.apply {
             setTitle("Change Question")
-            setPositiveButton(viewModel.answerTitle) { _, _ ->
+            setPositiveButton("Back") { _, _ ->
                 viewModel.questionMode = 2
                 changeCardValues()
             }
-            setNegativeButton(viewModel.questionTitle) { _, _ ->
+            setNegativeButton("Front") { _, _ ->
                 viewModel.questionMode = 1
                 changeCardValues()
             }
