@@ -4,7 +4,7 @@ import androidx.lifecycle.*
 import application.android.refresh.data.db.entity.Card
 import application.android.refresh.data.db.entity.Layout
 import application.android.refresh.data.db.entity.Routine
-import application.android.refresh.data.db.entity.RoutineCard
+import application.android.refresh.data.internal.PracticeCard
 import application.android.refresh.data.repository.RefreshRepository
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -55,21 +55,21 @@ class RoutinesInfoViewModel(private val refreshRepository: RefreshRepository) : 
     }
 
     private fun validate(card: Card): Boolean {
-        val routineCard = routine?.finishedCards?.find {
+        val practiceCard = routine?.finishedCards?.find {
             it.id == card.id
         } ?: return true
 
-        if (routineCard.sessionDelay < System.currentTimeMillis() && !routineCard.completed) {
+        if (practiceCard.sessionDelay < System.currentTimeMillis() && !practiceCard.completed) {
             return true
         }
 
         return false
     }
 
-    private fun validateReset(routineCard: RoutineCard): Boolean {
-        return (routineCard.sessionDelay < System.currentTimeMillis()
-                && !routineCard.completed
-                && (isDone.value == true || routineCard.id != cardId))
+    private fun validateReset(practiceCard: PracticeCard): Boolean {
+        return (practiceCard.sessionDelay < System.currentTimeMillis()
+                && !practiceCard.completed
+                && (isDone.value == true || practiceCard.id != cardId))
     }
 
     fun getNextCard() {
@@ -99,19 +99,19 @@ class RoutinesInfoViewModel(private val refreshRepository: RefreshRepository) : 
     fun completeCard(cardId: Long) {
         viewModelScope.launch(Dispatchers.IO) {
             routine?.let {
-                var routineCardFound = false
+                var practiceCardFound = false
                 val updatedFinishedCards = it.finishedCards
-                updatedFinishedCards.find { routineCard ->
-                    routineCard.id == cardId
+                updatedFinishedCards.find { practiceCard ->
+                    practiceCard.id == cardId
 
-                }?.let { matchingRoutineCard ->
-                    matchingRoutineCard.completed = true
-                    routineCardFound = true
+                }?.let { matchingpracticeCard ->
+                    matchingpracticeCard.completed = true
+                    practiceCardFound = true
                 }
 
-                if (!routineCardFound) {
+                if (!practiceCardFound) {
                     updatedFinishedCards.add(
-                        RoutineCard(
+                        PracticeCard(
                             cardId, true,
                             0L
                         )
@@ -128,10 +128,10 @@ class RoutinesInfoViewModel(private val refreshRepository: RefreshRepository) : 
             routine?.let {
                 val updatedFinishedCards = it.finishedCards
                 val newCardList: ArrayList<Card> = arrayListOf()
-                updatedFinishedCards.map { routineCard ->
-                    routineCard.completed = false
-                    if (validateReset(routineCard)) {
-                        val card: Card? = refreshRepository.getCardAtOnce(routineCard.id)
+                updatedFinishedCards.map { practiceCard ->
+                    practiceCard.completed = false
+                    if (validateReset(practiceCard)) {
+                        val card: Card? = refreshRepository.getCardAtOnce(practiceCard.id)
                         if (card != null) {
                             newCardList.add(card)
                         }
@@ -153,10 +153,10 @@ class RoutinesInfoViewModel(private val refreshRepository: RefreshRepository) : 
             routine?.let {
                 val updatedFinishedCards = it.finishedCards
                 val newCardList: ArrayList<Card> = arrayListOf()
-                updatedFinishedCards.map { routineCard ->
-                    routineCard.sessionDelay = 0L
-                    if (validateReset(routineCard)) {
-                        val card: Card? = refreshRepository.getCardAtOnce(routineCard.id)
+                updatedFinishedCards.map { practiceCard ->
+                    practiceCard.sessionDelay = 0L
+                    if (validateReset(practiceCard)) {
+                        val card: Card? = refreshRepository.getCardAtOnce(practiceCard.id)
                         if (card != null) {
                             newCardList.add(card)
                         }
@@ -190,19 +190,19 @@ class RoutinesInfoViewModel(private val refreshRepository: RefreshRepository) : 
     fun setCardDelay(cardId: Long, delay: Long) {
         viewModelScope.launch(Dispatchers.IO) {
             routine?.let {
-                var routineCardFound = false
+                var practiceCardFound = false
                 val updatedFinishedCards = it.finishedCards
-                updatedFinishedCards.find { routineCard ->
-                    routineCard.id == cardId
+                updatedFinishedCards.find { practiceCard ->
+                    practiceCard.id == cardId
 
-                }?.let { matchingRoutineCard ->
-                    matchingRoutineCard.sessionDelay = delay
-                    routineCardFound = true
+                }?.let { matchingpracticeCard ->
+                    matchingpracticeCard.sessionDelay = delay
+                    practiceCardFound = true
                 }
 
-                if (!routineCardFound) {
+                if (!practiceCardFound) {
                     updatedFinishedCards.add(
-                        RoutineCard(cardId, false, delay)
+                        PracticeCard(cardId, false, delay)
                     )
                 }
                 val updatedRoutine = Routine(it.id, it.name, it.layoutIds, updatedFinishedCards)

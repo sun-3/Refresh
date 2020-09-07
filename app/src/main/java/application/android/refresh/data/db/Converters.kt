@@ -1,7 +1,7 @@
 package application.android.refresh.data.db
 
 import androidx.room.TypeConverter
-import application.android.refresh.data.db.entity.RoutineCard
+import application.android.refresh.data.internal.PracticeCard
 
 class Converters {
 
@@ -20,15 +20,15 @@ class Converters {
     }
 
     @TypeConverter
-    fun routineCardToJson(routineCardList: MutableList<RoutineCard>): String {
-        return DbUtils.GSON().toJson(routineCardList)
+    fun routineCardToJson(practiceCardList: MutableList<PracticeCard>): String {
+        return DbUtils.GSON().toJson(practiceCardList)
     }
 
     @TypeConverter
-    fun jsonToRoutineCard(value: String): MutableList<RoutineCard> {
+    fun jsonToRoutineCard(value: String): MutableList<PracticeCard> {
         return DbUtils.GSON().fromJson(
             value,
-            Array<RoutineCard>::class.java).toMutableList()
+            Array<PracticeCard>::class.java).toMutableList()
     }
 
 }
