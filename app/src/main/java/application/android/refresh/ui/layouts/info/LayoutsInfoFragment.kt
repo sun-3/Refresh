@@ -27,7 +27,6 @@ class LayoutsInfoFragment : Fragment(), KodeinAware {
     instance<LayoutsInfoViewModelFactory>()
 
     private lateinit var viewModel: LayoutsInfoViewModel
-
     private val args: LayoutsInfoFragmentArgs by navArgs()
 
     override fun onCreateView(
@@ -57,8 +56,9 @@ class LayoutsInfoFragment : Fragment(), KodeinAware {
         viewModel.layoutDetails(layoutId).observe(viewLifecycleOwner, Observer { l ->
             l?.let { layout ->
                 viewModel.layoutName.postValue("${layout.name} Layout")
-                setFields(layout)
-                setToolbarMenu(layout)
+                viewModel.layout = layout
+                setFields()
+                setToolbarMenu()
             }
         })
     }
@@ -78,44 +78,48 @@ class LayoutsInfoFragment : Fragment(), KodeinAware {
         })
     }
 
-    private fun setToolbarMenu(layout: Layout) {
-        layoutsInfoToolbar.inflateMenu(R.menu.info_menu)
-        val menu = layoutsInfoToolbar.menu
-        menu.findItem(R.id.action_edit).setOnMenuItemClickListener {
-            val layoutsUpdateAction =
-                LayoutsInfoFragmentDirections.layoutsUpdateAction(layout.id)
-            findNavController().navigate(layoutsUpdateAction)
-            return@setOnMenuItemClickListener true
-        }
+    private fun setToolbarMenu() {
+        viewModel.layout?.let { layout ->
+            layoutsInfoToolbar.inflateMenu(R.menu.info_menu)
+            val menu = layoutsInfoToolbar.menu
+            menu.findItem(R.id.action_edit).setOnMenuItemClickListener {
+                val layoutsUpdateAction =
+                    LayoutsInfoFragmentDirections.layoutsUpdateAction(layout.id)
+                findNavController().navigate(layoutsUpdateAction)
+                return@setOnMenuItemClickListener true
+            }
 
-        menu.findItem(R.id.action_delete).setOnMenuItemClickListener {
-            confirmDeleteDialog(layout)
-            return@setOnMenuItemClickListener true
-        }
-    }
-
-    private fun setFields(layout: Layout) {
-        layoutsInfoFront.text = layout.front
-        layoutsInfoBack.text = layout.back
-
-        if (!layout.backExtra.isBlank()) {
-            layoutsInfoBackExtraTitle.visibility = View.VISIBLE
-            layoutsInfoBackExtra.visibility = View.VISIBLE
-            layoutsInfoBackExtra.text = layout.backExtra
-        } else {
-            layoutsInfoBackExtraTitle.visibility = View.GONE
-            layoutsInfoBackExtra.visibility = View.GONE
+            menu.findItem(R.id.action_delete).setOnMenuItemClickListener {
+                confirmDeleteDialog()
+                return@setOnMenuItemClickListener true
+            }
         }
     }
 
-    private fun confirmDeleteDialog(layout: Layout) {
+    private fun setFields() {
+        viewModel.layout?.let { layout ->
+            layoutsInfoFront.text = layout.front
+            layoutsInfoBack.text = layout.back
+
+            if (!layout.backExtra.isBlank()) {
+                layoutsInfoBackExtraTitle.visibility = View.VISIBLE
+                layoutsInfoBackExtra.visibility = View.VISIBLE
+                layoutsInfoBackExtra.text = layout.backExtra
+            } else {
+                layoutsInfoBackExtraTitle.visibility = View.GONE
+                layoutsInfoBackExtra.visibility = View.GONE
+            }
+        }
+    }
+
+    private fun confirmDeleteDialog() {
         val builder = AlertDialog.Builder(requireContext())
         builder.setTitle("Delete Layout")
         builder.setMessage("This will also delete all the associated cards")
             .setPositiveButton(
                 "Delete"
             ) { dialog, _ ->
-                viewModel.deleteLayout(layout)
+                viewModel.deleteLayout()
                 viewModel.isOkayToExit.observe(viewLifecycleOwner, Observer {
                     if (it) {
                         findNavController().navigateUp()

@@ -8,7 +8,7 @@ import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.launch
 
 class LayoutsInfoViewModel(private val refreshRepository: RefreshRepository) : ViewModel() {
-
+    var layout: Layout? = null
     val isOkayToExit = MutableLiveData<Boolean>()
     val layoutName = MutableLiveData<String>()
 
@@ -16,13 +16,10 @@ class LayoutsInfoViewModel(private val refreshRepository: RefreshRepository) : V
         emitSource(refreshRepository.getLayout(id))
     }
 
-    fun deleteLayout(layout: Layout) {
+    fun deleteLayout() {
         viewModelScope.launch(Dispatchers.IO) {
-            isOkayToExit.postValue(false)
-            coroutineScope {
-                launch {
-                    refreshRepository.deleteLayout(layout)
-                }
+            layout?.let {
+                refreshRepository.deleteLayout(it)
             }
             isOkayToExit.postValue(true)
         }
