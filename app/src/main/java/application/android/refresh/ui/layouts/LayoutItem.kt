@@ -11,7 +11,10 @@ class LayoutItem(val layout: Layout) : Item() {
 
     override fun bind(viewHolder: GroupieViewHolder, position: Int) {
         val separator = viewHolder.itemView.context.getText(R.string.separator)
-        val layoutText = "${layout.front} $separator ${layout.back} $separator ${layout.backExtra}"
+        var layoutText = "${layout.front} $separator ${layout.back}"
+        if (layout.backExtra.isNotBlank()) {
+            layoutText = "$layoutText $separator ${layout.backExtra}"
+        }
         viewHolder.itemView.layoutName.text = layout.name
         viewHolder.itemView.layoutText.text = layoutText
     }
