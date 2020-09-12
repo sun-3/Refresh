@@ -59,6 +59,7 @@ class LayoutsInfoFragment : Fragment(), KodeinAware {
                 viewModel.layout = layout
                 setFields()
                 setToolbarMenu()
+                viewModel.cardCount()
             }
         })
     }
@@ -110,6 +111,10 @@ class LayoutsInfoFragment : Fragment(), KodeinAware {
                 layoutsInfoBackExtra.visibility = View.GONE
             }
         }
+
+        viewModel.count.observe(viewLifecycleOwner, Observer {
+            layoutsInfoCount.text = "$it"
+        })
     }
 
     private fun confirmDeleteDialog() {
