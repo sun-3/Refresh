@@ -40,13 +40,16 @@ class RoutinesInfoViewModel(private val refreshRepository: RefreshRepository) : 
             routine?.let {
                 routineName.postValue(it.name)
                 it.layoutIds.forEach { id ->
-                    layoutList.add(refreshRepository.getLayoutAtOnce(id))
-                    refreshRepository.getCardsWithLayoutId(id).forEach { card ->
-                        if (validate(card)) {
-                            cardList.add(card)
+                    val layout: Layout? =refreshRepository.getLayoutAtOnce(id)
+
+                    if (layout != null) {
+                        layoutList.add(layout)
+                        refreshRepository.getCardsWithLayoutId(layout.id).forEach { card ->
+                            if (validate(card)) {
+                                cardList.add(card)
+                            }
                         }
                     }
-
                 }
                 cardList.shuffle()
             }
@@ -82,6 +85,7 @@ class RoutinesInfoViewModel(private val refreshRepository: RefreshRepository) : 
                 val layout: Layout? = layoutList.find {
                     it.id == card.layoutId
                 }
+
                 if (layout != null) {
                     cardId = card.id
                     questionTitle = layout.front
