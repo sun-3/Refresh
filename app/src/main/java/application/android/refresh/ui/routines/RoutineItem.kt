@@ -11,7 +11,8 @@ class RoutineItem(val routineCard: RoutineCard) : Item() {
     override fun getLayout() = R.layout.item_routine
 
     override fun bind(viewHolder: GroupieViewHolder, position: Int) {
-        val completedCards = "Cards: " + routineCard.completedCards + " / " + routineCard.totalCards
+        val remainingCards = routineCard.totalCards - routineCard.completedCards
+        val completedCards = "Cards: " + remainingCards + " / " + routineCard.totalCards
         val routineLayouts = "{ ${routineCard.layoutNames.joinToString(", ")} }"
         viewHolder.itemView.routineName.text = routineCard.name
         viewHolder.itemView.routineCompletedCards.text = completedCards
