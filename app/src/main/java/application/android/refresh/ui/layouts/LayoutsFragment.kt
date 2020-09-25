@@ -82,6 +82,11 @@ class LayoutsFragment : Fragment(), KodeinAware {
             (activity as MainActivity).signOut()
             return@setOnMenuItemClickListener true
         }
+
+        menu.findItem(R.id.action_delete_account).setOnMenuItemClickListener {
+            (activity as MainActivity).confirmDeleteDialog()
+            return@setOnMenuItemClickListener true
+        }
     }
 
     private fun initRecyclerView() {

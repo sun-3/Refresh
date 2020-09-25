@@ -44,6 +44,7 @@
     <string name="login_to_continue">Login to continue.</string>
     <string name="login">Login</string>
     <string name="sign_out">Sign Out</string>
+    <string name="delete_account">Delete Account</string>
     <plurals name="layoutsSelected">
         <item quantity="one">%d layout selected</item>
         <item quantity="other">%d layouts selected</item>
