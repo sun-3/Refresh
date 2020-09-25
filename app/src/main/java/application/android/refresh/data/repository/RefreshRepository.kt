@@ -34,4 +34,7 @@ interface RefreshRepository {
     suspend fun deleteRoutine(routine: Routine)
     suspend fun getRoutine(id: Long): LiveData<Routine>
     suspend fun getRoutineList(): LiveData<List<Routine>>
+
+    // Remote Database
+    suspend fun getDataFromDB(userId: String, layouts: ArrayList<Layout>, cards: ArrayList<Card>, routines: ArrayList<Routine>): LiveData<Boolean>
 }
