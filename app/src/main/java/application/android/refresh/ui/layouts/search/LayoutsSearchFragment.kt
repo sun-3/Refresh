@@ -30,7 +30,7 @@ class LayoutsSearchFragment : Fragment(), KodeinAware {
     private val viewModelFactory: LayoutsSearchViewModelFactory by
     instance<LayoutsSearchViewModelFactory>()
 
-    private lateinit var groupieAdapter: GroupAdapter<GroupieViewHolder>
+    private val groupieAdapter = GroupAdapter<GroupieViewHolder>()
     private lateinit var viewModel: LayoutsSearchViewModel
     private lateinit var groupieList: List<LayoutItem>
     private var shouldInitRecyclerView: Boolean = false
@@ -95,7 +95,6 @@ class LayoutsSearchFragment : Fragment(), KodeinAware {
     private fun initRecyclerView() {
         if (viewModel.list.isNullOrEmpty() || !shouldInitRecyclerView) return
         shouldInitRecyclerView = false
-        groupieAdapter = GroupAdapter<GroupieViewHolder>()
         addLayoutsToGroupie(viewModel.list)
         layoutsSearchRecyclerView.apply {
             layoutManager = LinearLayoutManager(this@LayoutsSearchFragment.context)
