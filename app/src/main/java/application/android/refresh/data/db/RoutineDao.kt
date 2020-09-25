@@ -7,8 +7,8 @@ import application.android.refresh.data.db.entity.Routine
 @Dao
 interface RoutineDao {
 
-    @Query("SELECT * FROM routines")
-    fun getRoutines(): LiveData<List<Routine>>
+    @Query("SELECT * FROM routines WHERE userId = :userId")
+    fun getRoutines(userId: String): LiveData<List<Routine>>
 
     @Query("SELECT * FROM routines WHERE id = :id")
     fun getRoutine(id: Long): LiveData<Routine>

@@ -6,6 +6,7 @@ import androidx.room.PrimaryKey
 @Entity(tableName = "layouts")
 data class Layout(
     @PrimaryKey val id: Long,
+    val userId: String,
     val name: String,
     val front: String,
     val back: String,
