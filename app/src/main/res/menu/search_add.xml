@@ -10,4 +10,8 @@
         android:title="@string/add"
         android:icon="@drawable/ic_add"
         app:showAsAction="ifRoom|collapseActionView"/>
+
+    <item android:id="@+id/action_sign_out"
+        android:title="@string/sign_out"
+        app:showAsAction="never"/>
 </menu>

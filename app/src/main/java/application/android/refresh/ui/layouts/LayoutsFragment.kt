@@ -12,6 +12,7 @@ import androidx.navigation.fragment.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupWithNavController
 import androidx.recyclerview.widget.LinearLayoutManager
+import application.android.refresh.MainActivity
 import application.android.refresh.R
 import application.android.refresh.data.db.entity.Layout
 import com.xwray.groupie.GroupAdapter
@@ -74,6 +75,11 @@ class LayoutsFragment : Fragment(), KodeinAware {
         }
         menu.findItem(R.id.action_add).setOnMenuItemClickListener {
             findNavController().navigate(R.id.layoutsCreateAction)
+            return@setOnMenuItemClickListener true
+        }
+
+        menu.findItem(R.id.action_sign_out).setOnMenuItemClickListener {
+            (activity as MainActivity).signOut()
             return@setOnMenuItemClickListener true
         }
     }

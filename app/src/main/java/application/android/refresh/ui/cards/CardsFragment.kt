@@ -15,10 +15,13 @@ import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupWithNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import application.android.refresh.MainActivity
 import application.android.refresh.R
+import application.android.refresh.StartActivity
 import application.android.refresh.data.db.entity.Card
 import application.android.refresh.internal.ScrollDirection
 import application.android.refresh.internal.SearchRequest
+import com.google.firebase.auth.FirebaseAuth
 import com.xwray.groupie.GroupAdapter
 import com.xwray.groupie.kotlinandroidextensions.GroupieViewHolder
 import kotlinx.android.synthetic.main.fragment_cards.*
@@ -81,6 +84,11 @@ class CardsFragment : Fragment(), KodeinAware {
             val layoutSelectionAction =
                 CardsFragmentDirections.layoutSelectionAction(SearchRequest.CARDS_CREATE)
             findNavController().navigate(layoutSelectionAction)
+            return@setOnMenuItemClickListener true
+        }
+
+        menu.findItem(R.id.action_sign_out).setOnMenuItemClickListener {
+            (activity as MainActivity).signOut()
             return@setOnMenuItemClickListener true
         }
     }
