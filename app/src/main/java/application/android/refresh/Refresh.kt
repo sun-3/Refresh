@@ -3,6 +3,7 @@ package application.android.refresh
 import android.app.Application
 import androidx.appcompat.app.AppCompatDelegate
 import application.android.refresh.data.db.RefreshDatabase
+import application.android.refresh.data.db.UserUtils
 import application.android.refresh.data.repository.RefreshRepository
 import application.android.refresh.data.repository.RefreshRepositoryImpl
 import application.android.refresh.ui.cards.CardsViewModelFactory
@@ -17,6 +18,9 @@ import application.android.refresh.ui.layouts.update.LayoutsUpdateViewModelFacto
 import application.android.refresh.ui.routines.RoutinesViewModelFactory
 import application.android.refresh.ui.routines.create.RoutinesCreateViewModelFactory
 import application.android.refresh.ui.routines.info.RoutinesInfoViewModelFactory
+import application.android.refresh.ui.user.login.UserLoginViewModelFactory
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.firestore.FirebaseFirestore
 import org.kodein.di.Kodein
 import org.kodein.di.KodeinAware
 import org.kodein.di.android.x.androidXModule
@@ -34,8 +38,10 @@ class Refresh : Application(), KodeinAware {
         bind() from singleton { instance<RefreshDatabase>().layoutDao() }
         bind() from singleton { instance<RefreshDatabase>().cardDao() }
         bind() from singleton { instance<RefreshDatabase>().routineDao() }
+        bind() from singleton { FirebaseFirestore.getInstance() }
         bind<RefreshRepository>() with singleton {
             RefreshRepositoryImpl(
+                instance(),
                 instance(),
                 instance(),
                 instance()
@@ -59,6 +65,9 @@ class Refresh : Application(), KodeinAware {
         bind() from provider { RoutinesViewModelFactory(instance()) }
         bind() from provider { RoutinesCreateViewModelFactory(instance()) }
         bind() from provider { RoutinesInfoViewModelFactory(instance()) }
+
+        // User
+        bind() from provider { UserLoginViewModelFactory(instance()) }
     }
 
 
@@ -67,5 +76,9 @@ class Refresh : Application(), KodeinAware {
         AppCompatDelegate.setDefaultNightMode(
             AppCompatDelegate.MODE_NIGHT_YES
         )
+
+        FirebaseAuth.getInstance().currentUser?.let {
+            UserUtils.setUserId(it.uid)
+        }
     }
 }
