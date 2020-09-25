@@ -13,6 +13,7 @@ import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupWithNavController
 import application.android.refresh.R
 import application.android.refresh.data.db.DbUtils
+import application.android.refresh.data.db.UserUtils
 import application.android.refresh.data.db.entity.Layout
 import kotlinx.android.synthetic.main.fragment_cards_create.*
 import kotlinx.android.synthetic.main.fragment_layouts_create.*
@@ -94,6 +95,7 @@ class LayoutsCreateFragment : Fragment(), KodeinAware {
                         layoutBackExtra = layoutsCreateAnswer.text.toString()
                         val layout = Layout(
                             DbUtils.GenerateId(),
+                            UserUtils.getUserId(),
                             layoutName,
                             layoutFront,
                             layoutBack,

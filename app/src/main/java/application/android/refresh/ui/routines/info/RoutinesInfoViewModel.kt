@@ -121,7 +121,8 @@ class RoutinesInfoViewModel(private val refreshRepository: RefreshRepository) : 
                         )
                     )
                 }
-                val updatedRoutine = Routine(it.id, it.name, it.layoutIds, updatedFinishedCards)
+                val updatedRoutine = Routine(it.id, it.userId, it.name, it.layoutIds,
+                    updatedFinishedCards)
                 refreshRepository.updateRoutine(updatedRoutine)
             }
         }
@@ -141,7 +142,8 @@ class RoutinesInfoViewModel(private val refreshRepository: RefreshRepository) : 
                         }
                     }
                 }
-                val updatedRoutine = Routine(it.id, it.name, it.layoutIds, updatedFinishedCards)
+                val updatedRoutine = Routine(it.id, it.userId, it.name, it.layoutIds,
+                    updatedFinishedCards)
                 refreshRepository.updateRoutine(updatedRoutine)
                 cardListAddAll(newCardList)
 
@@ -166,7 +168,8 @@ class RoutinesInfoViewModel(private val refreshRepository: RefreshRepository) : 
                         }
                     }
                 }
-                val updatedRoutine = Routine(it.id, it.name, it.layoutIds, updatedFinishedCards)
+                val updatedRoutine = Routine(it.id, it.userId, it.name, it.layoutIds,
+                    updatedFinishedCards)
                 refreshRepository.updateRoutine(updatedRoutine)
                 cardListAddAll(newCardList)
 
@@ -209,7 +212,8 @@ class RoutinesInfoViewModel(private val refreshRepository: RefreshRepository) : 
                         PracticeCard(cardId, false, delay)
                     )
                 }
-                val updatedRoutine = Routine(it.id, it.name, it.layoutIds, updatedFinishedCards)
+                val updatedRoutine = Routine(it.id, it.userId, it.name, it.layoutIds,
+                updatedFinishedCards)
                 refreshRepository.updateRoutine(updatedRoutine)
             }
         }

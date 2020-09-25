@@ -86,6 +86,7 @@ class LayoutsUpdateFragment : Fragment(), KodeinAware {
                 viewModel.updateLayout(
                     Layout(
                         layout.id,
+                        layout.userId,
                         layoutsUpdateName.text.toString(),
                         layoutsUpdateFront.text.toString(),
                         layoutsUpdateBack.text.toString(),

@@ -99,6 +99,7 @@ class CardsUpdateFragment : Fragment(), KodeinAware {
                 viewModel.updateCard(
                     Card(
                         card.id,
+                        card.userId,
                         card.layoutId,
                         card.layoutName,
                         cardsUpdateFront.text.toString(),

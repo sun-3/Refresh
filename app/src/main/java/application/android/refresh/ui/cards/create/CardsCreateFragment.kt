@@ -102,6 +102,7 @@ class CardsCreateFragment : Fragment(), KodeinAware {
 
                         val card = Card(
                             DbUtils.GenerateId(),
+                            layout.userId,
                             layout.id,
                             layout.name,
                             cardFront,

@@ -14,6 +14,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import application.android.refresh.R
 import application.android.refresh.data.db.DbUtils
+import application.android.refresh.data.db.UserUtils
 import application.android.refresh.data.db.entity.Routine
 import kotlinx.android.synthetic.main.fragment_routines_create.*
 import org.kodein.di.KodeinAware
@@ -77,6 +78,7 @@ class RoutinesCreateFragment : Fragment(), KodeinAware {
                     2 -> {
                         val routineRoutine = Routine(
                             DbUtils.GenerateId(),
+                            UserUtils.getUserId(),
                             viewModel.routineName,
                             viewModel.selectedLayoutIds,
                             mutableListOf()
